@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Admin\DosenDplController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -25,4 +25,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('admin.dashboard');
+
+    Route::resource('dosen-dpl', DosenDplController::class);
 });

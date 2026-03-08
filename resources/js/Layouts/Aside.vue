@@ -6,7 +6,7 @@
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2"
     id="sidenav-main">
     <div class="sidenav-header">
-        <i class="material-symbols-rounded p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        <i class="material-symbols-rounded p-3 cursor-pointer text-dark opacity-5 position-absolute top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav">close</i>
         <Link class="navbar-brand px-4 py-3 m-0" href="/">
             <img src="/assets/img/Unaya.png" class="navbar-brand-img" width="26" height="26"
@@ -21,21 +21,21 @@
             <!-- Jika User terotentikasi dan merupkan Admin (contoh pengecekan dari email "operatorkkn", ganti dengan `role` nantinya) -->
             <template v-if="$page.props.auth.user && $page.props.auth.user.email === 'operatorkkn@abulyatama.ac.id'">
                 <li class="nav-item">
-                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/admin/dashboard'), 'text-dark': !$page.url.startsWith('/admin/dashboard') }" href="/admin/dashboard">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/admin/dashboard', 'text-dark': $page.url !== '/admin/dashboard' }" href="/admin/dashboard">
                         <i class="material-symbols-rounded opacity-5">dashboard</i>
-                        <span class="nav-link-text ms-2">Dashboard Admin</span>
+                        <span class="nav-link-text ms-2">Dashboard</span>
                     </Link>
                 </li>
                 <li class="nav-item">
-                    <Link class="nav-link text-dark" href="/mahasiswa/admin">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/mahasiswa/admin'), 'text-dark': !$page.url.startsWith('/mahasiswa/admin') }" href="/mahasiswa/admin">
                         <i class="material-symbols-rounded opacity-5">group</i>
                         <span class="nav-link-text ms-2">Mahasiswa</span>
                     </Link>
                 </li>
                 <li class="nav-item">
-                    <Link class="nav-link text-dark" href="/admin/riwayat">
-                        <i class="material-symbols-rounded opacity-5">receipt_long</i>
-                        <span class="nav-link-text ms-2">Riwayat Pendaftaran</span>
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/admin/dosen-dpl'), 'text-dark': !$page.url.startsWith('/admin/dosen-dpl') }" href="/admin/dosen-dpl">
+                        <i class="material-symbols-rounded opacity-5">groups_3</i>
+                        <span class="nav-link-text ms-2">DPL</span>
                     </Link>
                 </li>
                 <!-- Tambahkan link admin yang lain persis seperti pola di atas... -->
