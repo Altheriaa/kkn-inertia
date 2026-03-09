@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DosenDplController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Mahasiswa\DashboardMahasiswaController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\JadwalKknController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -32,8 +33,15 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     // Sync Mahasiswa From Siakad
     Route::get('/sync-mahasiswa', [DashboardController::class, 'sync'])->name('admin.sync-mahasiswa');
 
+    // Dosen / DPL
     Route::resource('dosen-dpl', DosenDplController::class);
+
+    // Mahasiswa
     Route::resource('mahasiswa', MahasiswaController::class);
+
+    // Jadwal KKN
+    Route::get('/jadwal-kkn', [JadwalKknController::class, 'index'])->name('admin.jadwal-kkn');
+    Route::post('/sinkron-jadwal', [JadwalKknController::class, 'sync'])->name('admin.sinkron.jadwal');
 });
 
 // Mahasiswa Routing

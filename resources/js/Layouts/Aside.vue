@@ -27,6 +27,12 @@
                     </Link>
                 </li>
                 <li class="nav-item">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/admin/jadwal-kkn', 'text-dark': $page.url !== '/admin/jadwal-kkn' }" href="/admin/jadwal-kkn">
+                        <i class="material-symbols-rounded opacity-5">calendar_month</i>
+                        <span class="nav-link-text ms-2">Jadwal KKN</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
                     <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/admin/mahasiswa'), 'text-dark': !$page.url.startsWith('/admin/mahasiswa') }" href="/admin/mahasiswa">
                         <i class="material-symbols-rounded opacity-5">group</i>
                         <span class="nav-link-text ms-2">Mahasiswa</span>

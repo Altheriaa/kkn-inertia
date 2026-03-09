@@ -238,7 +238,7 @@ watch(() => page.props.flash, () => {
                                         <tr v-for="(dosen, index) in dosenDpls.data" :key="dosen.id"
                                             class="table-row-hover">
                                             <!-- NUPTK -->
-                                             <td>
+                                            <td>
                                                 <div class="d-flex px-3 py-1">
                                                     <div class="icon-shape icon-sm bg-gradient-dark shadow text-center border-radius-md d-flex align-items-center justify-content-center me-2">
                                                         <span class="text-white text-xs font-weight-bold">{{ (dosenDpls.current_page - 1) * dosenDpls.per_page + index + 1 }}</span>
