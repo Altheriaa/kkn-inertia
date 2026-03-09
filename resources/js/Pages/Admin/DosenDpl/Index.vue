@@ -4,13 +4,28 @@ import { Link, router, usePage } from '@inertiajs/vue3';
 import { ref, watch, onMounted } from 'vue';
 import Swal from 'sweetalert2';
 
+// Data Props From Controller
 const props = defineProps({
-    dosenDpls: Array,
+    dosenDpls: Object,
+    filters: Object,
     errors : Object
 });
 
-const searchQuery = ref('');
+// Search Functionality
+const searchQuery = ref(props.filters?.search || '');
+let searchTimeout = null;
 
+watch(searchQuery, (value) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        router.get('/admin/dosen-dpl', 
+            { search: value || undefined },
+            { preserveState: true, replace: true }
+        );
+    }, 300);
+});
+
+// SweetAlert2
 const page = usePage();
 
 const showFlashMessage = () => {
@@ -59,6 +74,7 @@ const showFlashMessage = () => {
     }
 };
 
+// Confirmation Alert
 const confirmDelete = (dosen) => {
     Swal.fire({
         title: 'Hapus Data?',
@@ -111,7 +127,7 @@ watch(() => page.props.flash, () => {
                                 </div>
                                 <span class="badge bg-white text-dark py-2 px-3 shadow-sm">
                                     <i class="material-symbols-rounded text-sm me-1 align-middle">database</i>
-                                    {{ dosenDpls?.length || 0 }} Data
+                                    {{ dosenDpls?.total || 0 }} Data
                                 </span>
                             </div>
                         </div>
@@ -122,6 +138,7 @@ watch(() => page.props.flash, () => {
                                 <Link href="/admin/dosen-dpl/create" class="btn bg-gradient-dark mb-0 shadow-sm">
                                     <i class="material-symbols-rounded text-sm me-1">person_add</i> Tambah DPL
                                 </Link>
+                                <!-- Search Bar -->
                                 <div class="input-group input-group-outline" :class="{ 'is-focused': false, 'is-filled': searchQuery }" style="max-width: 300px;">
                                     <label class="form-label">
                                         Cari dosen...
@@ -167,7 +184,7 @@ watch(() => page.props.flash, () => {
                                     </thead>
                                     <tbody>
                                         <!-- Empty State -->
-                                        <tr v-if="!dosenDpls || dosenDpls.length === 0">
+                                        <tr v-if="!dosenDpls || !dosenDpls.data || dosenDpls.data.length === 0">
                                             <td colspan="6" class="text-center py-5">
                                                 <div class="d-flex flex-column align-items-center">
                                                     <i class="material-symbols-rounded opacity-3 mb-2" style="font-size: 64px;">group_off</i>
@@ -181,13 +198,13 @@ watch(() => page.props.flash, () => {
                                         </tr>
 
                                         <!-- Data Rows -->
-                                        <tr v-for="(dosen, index) in dosenDpls" :key="dosen.id"
+                                        <tr v-for="(dosen, index) in dosenDpls.data" :key="dosen.id"
                                             class="table-row-hover">
                                             <!-- NUPTK -->
                                             <td>
                                                 <div class="d-flex px-3 py-1">
                                                     <div class="icon-shape icon-sm bg-gradient-dark shadow text-center border-radius-md d-flex align-items-center justify-content-center me-2">
-                                                        <span class="text-white text-xs font-weight-bold">{{ index + 1 }}</span>
+                                                        <span class="text-white text-xs font-weight-bold">{{ (dosenDpls.current_page - 1) * dosenDpls.per_page + index + 1 }}</span>
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm font-weight-bold">{{ dosen.nuptk }}</h6>
@@ -227,12 +244,40 @@ watch(() => page.props.flash, () => {
                                 </table>
                             </div>
 
-                            <!-- Footer Info -->
-                            <div class="d-flex justify-content-between align-items-center px-4 py-3" v-if="dosenDpls && dosenDpls.length > 0">
+                            <!-- Pagination & Footer Info -->
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center px-4 py-3 gap-3" v-if="dosenDpls && dosenDpls.data && dosenDpls.data.length > 0">
                                 <p class="text-xs text-secondary mb-0">
                                     <i class="material-symbols-rounded text-xs align-middle me-1">info</i>
-                                    Menampilkan {{ dosenDpls.length }} data dosen pembimbing lapangan.
+                                    Menampilkan {{ dosenDpls.from }}-{{ dosenDpls.to }} dari {{ dosenDpls.total }} data.
                                 </p>
+
+                                <!-- Pagination Buttons -->
+                                <nav v-if="dosenDpls.last_page > 1">
+                                    <ul class="pagination pagination-sm mb-0">
+                                        <!-- Previous -->
+                                        <li class="page-item" :class="{ disabled: !dosenDpls.prev_page_url }">
+                                            <Link :href="dosenDpls.prev_page_url || '#'" class="page-link" preserve-scroll>
+                                                <i class="material-symbols-rounded text-sm">chevron_left</i>
+                                            </Link>
+                                        </li>
+
+                                        <!-- Page Numbers -->
+                                        <li v-for="pageNum in dosenDpls.last_page" :key="pageNum"
+                                            class="page-item" :class="{ active: pageNum === dosenDpls.current_page }">
+                                            <Link :href="`/admin/dosen-dpl?page=${pageNum}${searchQuery ? '&search=' + searchQuery : ''}`"
+                                                class="page-link" preserve-scroll>
+                                                {{ pageNum }}
+                                            </Link>
+                                        </li>
+
+                                        <!-- Next -->
+                                        <li class="page-item" :class="{ disabled: !dosenDpls.next_page_url }">
+                                            <Link :href="dosenDpls.next_page_url || '#'" class="page-link" preserve-scroll>
+                                                <i class="material-symbols-rounded text-sm">chevron_right</i>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -257,5 +302,36 @@ watch(() => page.props.flash, () => {
 .btn-link:hover {
     transform: scale(1.15);
     transition: transform 0.2s ease;
+}
+
+.pagination .page-item .page-link {
+    border: none;
+    color: #344767;
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin: 0 2px;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #e9ecef;
+    color: #344767;
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(195deg, #42424a 0%, #191919 100%);
+    color: #fff;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.09), 0 2px 3px -1px rgba(0,0,0,.07);
+}
+
+.pagination .page-item.disabled .page-link {
+    opacity: 0.4;
+    pointer-events: none;
 }
 </style>

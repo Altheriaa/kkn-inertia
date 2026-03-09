@@ -78,21 +78,23 @@ import Swal from 'sweetalert2';
 
 <template>
     <LayoutLogin>
-        <div class="relative min-vh-100 flex items-center">
-            <div class="absolute inset-0 bg-cover bg-center blur-sm"
-                style="background-image: url('/assets/img/Biro Abulyatama.webp')">
+        <div class="position-relative min-vh-100 d-flex align-items-center">
+            <!-- Background Image with Blur -->
+            <div class="position-absolute w-100 h-100 top-0 start-0"
+                style="background-image: url('/assets/img/Biro Abulyatama.webp'); background-size: cover; background-position: center; filter: blur(4px); z-index: 0;">
             </div>
-            <div class="absolute inset-0 bg-gradient-dark opacity-6"></div>
+            <!-- Dark Overlay -->
+            <div class="position-absolute w-100 h-100 top-0 start-0 bg-gradient-dark opacity-6" style="z-index: 1;"></div>
 
             <!-- Login Form Content -->
-            <div class="container my-auto relative z-10 p-4">
+            <div class="container my-auto position-relative p-4" style="z-index: 2;">
                 <div class="row">
                     <div class="col-lg-4 col-md-8 col-12 mx-auto">
                         <div class="card z-index-0 fadeIn3 fadeInBottom">
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                 <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
                                     <img src="/assets/img/Logo Unaya.png" alt=""
-                                        class="w-10 h-10 mx-auto">
+                                        style="width: 40px; height: 40px; display: block; margin: 0 auto;">
                                     <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Login Admin</h4>
                                     <h5 class="text-white font-weight-bolder text-center mt-2 mb-0">Sistem
                                         KKN Unaya</h5>

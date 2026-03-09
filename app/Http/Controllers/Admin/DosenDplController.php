@@ -9,12 +9,24 @@ use App\Models\DosenDpl;
 
 class DosenDplController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
+        
+        $search = $request->input('search');
 
-        $dosenDpls = DosenDpl::all();
+        $dosenDpls = DosenDpl::when($search, function ($query, $search) {
+                $query->where('nuptk', 'like', "%{$search}%")
+                      ->orWhere('nama_dosen', 'like', "%{$search}%")
+                      ->orWhere('prodi', 'like', "%{$search}%")
+                      ->orWhere('bidang_keahlian', 'like', "%{$search}%")
+                      ->orWhere('no_hp', 'like', "%{$search}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->withQueryString();
 
         return Inertia::render('Admin/DosenDpl/Index', [
-            'dosenDpls'=> $dosenDpls
+            'dosenDpls' => $dosenDpls,
+            'filters' => ['search' => $search],
         ]);
     }
 
