@@ -10,7 +10,7 @@ use App\Models\DosenDpl;
 class DosenDplController extends Controller
 {
     public function index(Request $request) {
-        
+
         $search = $request->input('search');
 
         $dosenDpls = DosenDpl::when($search, function ($query, $search) {
@@ -21,7 +21,7 @@ class DosenDplController extends Controller
                       ->orWhere('no_hp', 'like', "%{$search}%");
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         return Inertia::render('Admin/DosenDpl/Index', [

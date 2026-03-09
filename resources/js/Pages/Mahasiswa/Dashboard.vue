@@ -2,7 +2,7 @@
     import Layout from '../../Layouts/App.vue';
     import { Link, usePage } from '@inertiajs/vue3';
     import { router } from '@inertiajs/vue3';
-    import { ref, watch, onMounted } from 'vue';
+    import { watch, onMounted } from 'vue';
     import Swal from 'sweetalert2';
 
     const page = usePage();
@@ -60,19 +60,6 @@
     watch(() => page.props.flash, () => {
         showFlashMessage();
     }, { deep: true });
-
-    // sync mahasiswa
-    const syncing = ref(false);
-
-    const syncMahasiswa = () => {
-        syncing.value = true;
-        router.get('/admin/sync-mahasiswa', {}, {
-            preserveScroll: true,
-            onFinish: () => {
-                syncing.value = false;
-            },
-        });
-    };
 </script>
 
 <template>
@@ -80,7 +67,7 @@
         <div class="container-fluid py-2">
             <div class="row">
                 <div class="ms-3">
-                    <h3 class="mb-3 h4 font-weight-bolder">Dashboard Admin</h3>
+                    <h3 class="mb-3 h4 font-weight-bolder">Dashboard Mahasiswa</h3>
                 </div>
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div class="card">
@@ -320,12 +307,12 @@
                         <div class="card-header pb-0">
                             <div class="row p-4">
                                 <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn btn-lg btn-dark text-lg"
-                                        @click="syncMahasiswa" :disabled="syncing">
-                                        <span v-if="syncing" class="spinner-border spinner-border-sm me-2" role="status"></span>
-                                        <i v-else class="material-symbols-rounded">sync</i>
-                                        {{ syncing ? 'Syncing...' : 'Sync Mahasiswa' }}
-                                    </button>
+                                    <form action="" method="GET">
+                                        <button class="btn btn-lg btn-dark text-lg">
+                                            <i class="material-symbols-rounded">sync</i>
+                                            Sync Mahasiswa
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
