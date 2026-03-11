@@ -55,9 +55,9 @@
 
             <!-- Mahasiswa -->
             <!-- Menu Mahasiswa: Muncul bila mahasiswa login -->
-            <template v-else-if="$page.props.auth.user">
+            <template v-else-if="$page.props.authMahasiswa.user">
                 <li class="nav-item">
-                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/dashboard', 'text-dark': $page.url !== '/dashboard' }" href="/dashboard">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/mahasiswa/dashboard', 'text-dark': $page.url !== '/mahasiswa/dashboarddashboard' }" href="/mahasiswa/dashboard">
                         <i class="material-symbols-rounded opacity-5">dashboard</i>
                         <span class="nav-link-text ms-1">Dashboard Mahasiswa</span>
                     </Link>
@@ -91,7 +91,7 @@
                     Logout
                 </Link>
             </template>
-            <template v-else-if="$page.props.auth.user">
+            <template v-else-if="$page.props.authMahasiswa.user">
                 <Link href="/logout" class="btn bg-gradient-dark w-100" type="button">
                     Logout
                 </Link>

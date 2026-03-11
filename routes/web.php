@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\LokasiKknController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('landingPage');
 });
 
 // login mahasiswa
