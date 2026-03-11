@@ -109,299 +109,300 @@
 <template>
     <Layout>
         <div class="container-fluid py-2">
-        <div class="row">
-            <div class="col-12 mt-2">
-                <div class="card">
-                    <div class="card-body pt-4 p-3">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body p-4">
-                                        <!-- @if ($mahasiswa->status_kkn === 'Belum Daftar') -->
-                                        <template v-if="mahasiswa.status_kkn == 'Belum Daftar'">
-                                            <form @submit.prevent="confirmBiodata" id="biodataForm">
-                                                <div class="row px-3 mt-2">
-                                                    <div class="col-12 mb-4">
-                                                        <h5 class="font-weight-bolder">Pendaftaran KKN</h5>
-                                                        <p class="text-sm text-secondary">Lengkapi biodata di bawah ini dengan benar sebelum menyimpan.</p>
-                                                    </div>
-                                                    
-                                                    <!-- No HP -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.no_hp, 'is-invalid': form.errors.no_hp }">
-                                                            <label class="form-label">NO HP</label>
-                                                            <input type="text" class="form-control" v-model="form.no_hp"
-                                                                @focus="$event.target.parentElement.classList.add('is-focused')"
-                                                                @blur="$event.target.parentElement.classList.remove('is-focused')">
+            <div class="row">
+                <div class="col-12 mt-2">
+                    <div class="card">
+                        <div class="card-body pt-4 p-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body p-4">
+                                            <!-- @if ($mahasiswa->status_kkn === 'Belum Daftar') -->
+                                            <template v-if="mahasiswa.status_kkn == 'Belum Daftar'">
+                                                <form @submit.prevent="confirmBiodata" id="biodataForm">
+                                                    <div class="row px-3 mt-2">
+                                                        <div class="col-12 mb-4">
+                                                            <h5 class="font-weight-bolder">Pendaftaran KKN</h5>
+                                                            <p class="text-sm text-secondary">Lengkapi biodata di bawah ini dengan benar sebelum menyimpan.</p>
                                                         </div>
-                                                        <small v-if="form.errors.no_hp" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.no_hp }}
-                                                        </small>
-                                                    </div>
-
-                                                    <!-- No HP Darurat -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.no_hp_wali, 'is-invalid': form.errors.no_hp_wali }">
-                                                            <label class="form-label">NO HP Wali</label>
-                                                            <input type="text" class="form-control" v-model="form.no_hp_wali"
-                                                                @focus="$event.target.parentElement.classList.add('is-focused')"
-                                                                @blur="$event.target.parentElement.classList.remove('is-focused')">
+                                                        
+                                                        <!-- No HP -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.no_hp, 'is-invalid': form.errors.no_hp }">
+                                                                <label class="form-label">NO HP</label>
+                                                                <input type="text" class="form-control" v-model="form.no_hp"
+                                                                    @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                                    @blur="$event.target.parentElement.classList.remove('is-focused')">
+                                                            </div>
+                                                            <small v-if="form.errors.no_hp" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.no_hp }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.no_hp_wali" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.no_hp_wali }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Jenis Kelamin -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.jenis_kelamin, 'is-invalid': form.errors.jenis_kelamin }">
-                                                            <label class="form-label">Jenis Kelamin</label>
-                                                            <select class="form-control" v-model="form.jenis_kelamin">
-                                                                <option value="L">Laki-laki</option>
-                                                                <option value="P">Perempuan</option>
-                                                            </select>
+                                                        <!-- No HP Darurat -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.no_hp_wali, 'is-invalid': form.errors.no_hp_wali }">
+                                                                <label class="form-label">NO HP Wali</label>
+                                                                <input type="text" class="form-control" v-model="form.no_hp_wali"
+                                                                    @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                                    @blur="$event.target.parentElement.classList.remove('is-focused')">
+                                                            </div>
+                                                            <small v-if="form.errors.no_hp_wali" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.no_hp_wali }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.jenis_kelamin" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.jenis_kelamin }}
-                                                        </small>
-                                                    </div>
 
-
-                                                    <!-- Ukuran Jaket/Rompi -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.ukuran_jacket_rompi, 'is-invalid': form.errors.ukuran_jacket_rompi }">
-                                                            <label class="form-label">Ukuran Jacket / Rompi</label>
-                                                            <select class="form-control" v-model="form.ukuran_jacket_rompi">
-                                                                <option value="S">S</option>
-                                                                <option value="M">M</option>
-                                                                <option value="L">L</option>
-                                                                <option value="XL">XL</option>
-                                                                <option value="XXL">XXL</option>
-                                                                <option value="3XL">3XL</option>
-                                                            </select>
+                                                        <!-- Jenis Kelamin -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.jenis_kelamin, 'is-invalid': form.errors.jenis_kelamin }">
+                                                                <label class="form-label">Jenis Kelamin</label>
+                                                                <select class="form-control" v-model="form.jenis_kelamin">
+                                                                    <option value="L">Laki-laki</option>
+                                                                    <option value="P">Perempuan</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.jenis_kelamin" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.jenis_kelamin }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.ukuran_jacket_rompi" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.ukuran_jacket_rompi }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Punya Kendaraan -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.punya_kendaraan, 'is-invalid': form.errors.punya_kendaraan }">
-                                                            <label class="form-label">Mempunyai Kendaraan</label>
-                                                            <select class="form-control" v-model="form.punya_kendaraan">
-                                                                <option value="Punya">Ya</option>
-                                                                <option value="Tidak">Tidak</option>
-                                                            </select>
+
+                                                        <!-- Ukuran Jaket/Rompi -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.ukuran_jacket_rompi, 'is-invalid': form.errors.ukuran_jacket_rompi }">
+                                                                <label class="form-label">Ukuran Jacket / Rompi</label>
+                                                                <select class="form-control" v-model="form.ukuran_jacket_rompi">
+                                                                    <option value="S">S</option>
+                                                                    <option value="M">M</option>
+                                                                    <option value="L">L</option>
+                                                                    <option value="XL">XL</option>
+                                                                    <option value="XXL">XXL</option>
+                                                                    <option value="3XL">3XL</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.ukuran_jacket_rompi" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.ukuran_jacket_rompi }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.punya_kendaraan" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.punya_kendaraan }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Tipe Kendaraan  -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.tipe_kendaraan, 'is-invalid': form.errors.tipe_kendaraan }">
-                                                            <label class="form-label">Tipe Kendaraan</label>
-                                                            <select class="form-control" v-model="form.tipe_kendaraan">
-                                                                <option value="Tidak Ada">Tidak Ada</option>
-                                                                <option value="Mobil">Mobil</option>
-                                                                <option value="Sepeda Motor">Sepeda Motor</option>
-                                                            </select>
+                                                        <!-- Punya Kendaraan -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.punya_kendaraan, 'is-invalid': form.errors.punya_kendaraan }">
+                                                                <label class="form-label">Mempunyai Kendaraan</label>
+                                                                <select class="form-control" v-model="form.punya_kendaraan">
+                                                                    <option value="Punya">Ya</option>
+                                                                    <option value="Tidak">Tidak</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.punya_kendaraan" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.punya_kendaraan }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.tipe_kendaraan" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.tipe_kendaraan }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Punya Lisensi  -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.punya_lisensi, 'is-invalid': form.errors.punya_lisensi }">
-                                                            <label class="form-label">Mempunyai Lisensi</label>
-                                                            <select class="form-control" v-model="form.punya_lisensi">
-                                                                <option value="Tidak Ada">Tidak Ada</option>
-                                                                <option value="SIM A">SIM A</option>
-                                                                <option value="SIM B">SIM B</option>
-                                                                <option value="SIM C">SIM C</option>
-                                                            </select>
+                                                        <!-- Tipe Kendaraan  -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.tipe_kendaraan, 'is-invalid': form.errors.tipe_kendaraan }">
+                                                                <label class="form-label">Tipe Kendaraan</label>
+                                                                <select class="form-control" v-model="form.tipe_kendaraan">
+                                                                    <option value="Tidak Ada">Tidak Ada</option>
+                                                                    <option value="Mobil">Mobil</option>
+                                                                    <option value="Sepeda Motor">Sepeda Motor</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.tipe_kendaraan" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.tipe_kendaraan }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.punya_lisensi" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.punya_lisensi }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Keahlian -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.keahlian, 'is-invalid': form.errors.keahlian }">
-                                                            <label class="form-label">Keahlian</label>
-                                                            <input type="text" :maxlength=100 class="form-control" v-model="form.keahlian"
-                                                                @focus="$event.target.parentElement.classList.add('is-focused')"
-                                                                @blur="$event.target.parentElement.classList.remove('is-focused')">
+                                                        <!-- Punya Lisensi  -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.punya_lisensi, 'is-invalid': form.errors.punya_lisensi }">
+                                                                <label class="form-label">Mempunyai Lisensi</label>
+                                                                <select class="form-control" v-model="form.punya_lisensi">
+                                                                    <option value="Tidak Ada">Tidak Ada</option>
+                                                                    <option value="SIM A">SIM A</option>
+                                                                    <option value="SIM B">SIM B</option>
+                                                                    <option value="SIM C">SIM C</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.punya_lisensi" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.punya_lisensi }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.keahlian" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.keahlian }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Tombol Submit -->
-                                                    <div class="col-12 text-end mt-2 mb-1">
-                                                        <button type="submit" class="btn bg-gradient-dark px-4 py-2">
-                                                            <i class="material-symbols-rounded text-white me-2">save</i>Simpan Biodata
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </template>
-                                        <template v-else>
-                                            <form @submit.prevent="confirmBiodata" id="biodataForm">
-                                                <div class="row px-3 mt-2">
-                                                    <div class="col-12 mb-4">
-                                                        <h5 class="font-weight-bolder">Pendaftaran KKN</h5>
-                                                        <p class="text-sm text-secondary">Lengkapi biodata di bawah ini dengan benar sebelum menyimpan.</p>
-                                                    </div>
-                                                    
-                                                    <!-- No HP -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.no_hp, 'is-invalid': form.errors.no_hp }">
-                                                            <label disable class="form-label">NO HP</label>
-                                                            <input type="text" class="form-control" v-model="form.no_hp"
-                                                                @focus="$event.target.parentElement.classList.add('is-focused')"
-                                                                @blur="$event.target.parentElement.classList.remove('is-focused')" disabled>
+                                                        <!-- Keahlian -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.keahlian, 'is-invalid': form.errors.keahlian }">
+                                                                <label class="form-label">Keahlian</label>
+                                                                <input type="text" :maxlength=100 class="form-control" v-model="form.keahlian"
+                                                                    @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                                    @blur="$event.target.parentElement.classList.remove('is-focused')">
+                                                            </div>
+                                                            <small v-if="form.errors.keahlian" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.keahlian }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.no_hp" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.no_hp }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- No HP Darurat -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.no_hp_wali, 'is-invalid': form.errors.no_hp_wali }">
-                                                            <label class="form-label">NO HP Wali</label>
-                                                            <input type="text" class="form-control" v-model="form.no_hp_wali"
-                                                                @focus="$event.target.parentElement.classList.add('is-focused')"
-                                                                @blur="$event.target.parentElement.classList.remove('is-focused')" disabled>
+                                                        <!-- Tombol Submit -->
+                                                        <div class="col-12 text-end mt-2 mb-1">
+                                                            <button type="submit" class="btn bg-gradient-dark px-4 py-2">
+                                                                <i class="material-symbols-rounded text-white me-2">save</i>Simpan Biodata
+                                                            </button>
                                                         </div>
-                                                        <small v-if="form.errors.no_hp_wali" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.no_hp_wali }}
-                                                        </small>
                                                     </div>
-
-                                                    <!-- Jenis Kelamin -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.jenis_kelamin, 'is-invalid': form.errors.jenis_kelamin }">
-                                                            <label class="form-label">Jenis Kelamin</label>
-                                                            <select class="form-control" v-model="form.jenis_kelamin" disabled>
-                                                                <option value="L">Laki-laki</option>
-                                                                <option value="P">Perempuan</option>
-                                                            </select>
+                                                </form>
+                                            </template>
+                                            <template v-else>
+                                                <form @submit.prevent="confirmBiodata" id="biodataForm">
+                                                    <div class="row px-3 mt-2">
+                                                        <div class="col-12 mb-4">
+                                                            <h5 class="font-weight-bolder">Pendaftaran KKN</h5>
+                                                            <p class="text-sm text-secondary">Lengkapi biodata di bawah ini dengan benar sebelum menyimpan.</p>
                                                         </div>
-                                                        <small v-if="form.errors.jenis_kelamin" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.jenis_kelamin }}
-                                                        </small>
-                                                    </div>
-
-
-                                                    <!-- Ukuran Jaket/Rompi -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.ukuran_jacket_rompi, 'is-invalid': form.errors.ukuran_jacket_rompi }">
-                                                            <label class="form-label">Ukuran Jacket / Rompi</label>
-                                                            <select class="form-control" v-model="form.ukuran_jacket_rompi" disabled>
-                                                                <option value="S">S</option>
-                                                                <option value="M">M</option>
-                                                                <option value="L">L</option>
-                                                                <option value="XL">XL</option>
-                                                                <option value="XXL">XXL</option>
-                                                                <option value="3XL">3XL</option>
-                                                            </select>
+                                                        
+                                                        <!-- No HP -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.no_hp, 'is-invalid': form.errors.no_hp }">
+                                                                <label disable class="form-label">NO HP</label>
+                                                                <input type="text" class="form-control" v-model="form.no_hp"
+                                                                    @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                                    @blur="$event.target.parentElement.classList.remove('is-focused')" disabled>
+                                                            </div>
+                                                            <small v-if="form.errors.no_hp" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.no_hp }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.ukuran_jacket_rompi" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.ukuran_jacket_rompi }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Punya Kendaraan -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.punya_kendaraan, 'is-invalid': form.errors.punya_kendaraan }">
-                                                            <label class="form-label">Mempunyai Kendaraan</label>
-                                                            <select class="form-control" v-model="form.punya_kendaraan" disabled>
-                                                                <option value="Punya">Ya</option>
-                                                                <option value="Tidak">Tidak</option>
-                                                            </select>
+                                                        <!-- No HP Darurat -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.no_hp_wali, 'is-invalid': form.errors.no_hp_wali }">
+                                                                <label class="form-label">NO HP Wali</label>
+                                                                <input type="text" class="form-control" v-model="form.no_hp_wali"
+                                                                    @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                                    @blur="$event.target.parentElement.classList.remove('is-focused')" disabled>
+                                                            </div>
+                                                            <small v-if="form.errors.no_hp_wali" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.no_hp_wali }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.punya_kendaraan" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.punya_kendaraan }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Tipe Kendaraan  -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.tipe_kendaraan, 'is-invalid': form.errors.tipe_kendaraan }">
-                                                            <label class="form-label">Tipe Kendaraan</label>
-                                                            <select class="form-control" v-model="form.tipe_kendaraan" disabled>
-                                                                <option value="Tidak Ada">Tidak Ada</option>
-                                                                <option value="Mobil">Mobil</option>
-                                                                <option value="Sepeda Motor">Sepeda Motor</option>
-                                                            </select>
+                                                        <!-- Jenis Kelamin -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.jenis_kelamin, 'is-invalid': form.errors.jenis_kelamin }">
+                                                                <label class="form-label">Jenis Kelamin</label>
+                                                                <select class="form-control" v-model="form.jenis_kelamin" disabled>
+                                                                    <option value="L">Laki-laki</option>
+                                                                    <option value="P">Perempuan</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.jenis_kelamin" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.jenis_kelamin }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.tipe_kendaraan" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.tipe_kendaraan }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Punya Lisensi  -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.punya_lisensi, 'is-invalid': form.errors.punya_lisensi }">
-                                                            <label class="form-label">Mempunyai Lisensi</label>
-                                                            <select class="form-control" v-model="form.punya_lisensi" disabled>
-                                                                <option value="Tidak Ada">Tidak Ada</option>
-                                                                <option value="SIM A">SIM A</option>
-                                                                <option value="SIM B">SIM B</option>
-                                                                <option value="SIM C">SIM C</option>
-                                                            </select>
+
+                                                        <!-- Ukuran Jaket/Rompi -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.ukuran_jacket_rompi, 'is-invalid': form.errors.ukuran_jacket_rompi }">
+                                                                <label class="form-label">Ukuran Jacket / Rompi</label>
+                                                                <select class="form-control" v-model="form.ukuran_jacket_rompi" disabled>
+                                                                    <option value="S">S</option>
+                                                                    <option value="M">M</option>
+                                                                    <option value="L">L</option>
+                                                                    <option value="XL">XL</option>
+                                                                    <option value="XXL">XXL</option>
+                                                                    <option value="3XL">3XL</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.ukuran_jacket_rompi" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.ukuran_jacket_rompi }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.punya_lisensi" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.punya_lisensi }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Keahlian -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.keahlian, 'is-invalid': form.errors.keahlian }">
-                                                            <label class="form-label">Keahlian</label>
-                                                            <input type="text" :maxlength=100 class="form-control" v-model="form.keahlian"
-                                                                @focus="$event.target.parentElement.classList.add('is-focused')"
-                                                                @blur="$event.target.parentElement.classList.remove('is-focused')" disabled>
+                                                        <!-- Punya Kendaraan -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.punya_kendaraan, 'is-invalid': form.errors.punya_kendaraan }">
+                                                                <label class="form-label">Mempunyai Kendaraan</label>
+                                                                <select class="form-control" v-model="form.punya_kendaraan" disabled>
+                                                                    <option value="Punya">Ya</option>
+                                                                    <option value="Tidak">Tidak</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.punya_kendaraan" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.punya_kendaraan }}
+                                                            </small>
                                                         </div>
-                                                        <small v-if="form.errors.keahlian" class="text-danger text-xs mt-1 d-block">
-                                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
-                                                            {{ form.errors.keahlian }}
-                                                        </small>
-                                                    </div>
 
-                                                    <!-- Tombol Submit -->
-                                                    <div class="col-12 text-end mt-2 mb-1">
-                                                        <button type="submit" class="btn bg-gradient-dark px-4 py-2" disabled>
-                                                            <i class="material-symbols-rounded text-white me-2">save</i>Simpan Biodata
-                                                        </button>
+                                                        <!-- Tipe Kendaraan  -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.tipe_kendaraan, 'is-invalid': form.errors.tipe_kendaraan }">
+                                                                <label class="form-label">Tipe Kendaraan</label>
+                                                                <select class="form-control" v-model="form.tipe_kendaraan" disabled>
+                                                                    <option value="Tidak Ada">Tidak Ada</option>
+                                                                    <option value="Mobil">Mobil</option>
+                                                                    <option value="Sepeda Motor">Sepeda Motor</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.tipe_kendaraan" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.tipe_kendaraan }}
+                                                            </small>
+                                                        </div>
+
+                                                        <!-- Punya Lisensi  -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.punya_lisensi, 'is-invalid': form.errors.punya_lisensi }">
+                                                                <label class="form-label">Mempunyai Lisensi</label>
+                                                                <select class="form-control" v-model="form.punya_lisensi" disabled>
+                                                                    <option value="Tidak Ada">Tidak Ada</option>
+                                                                    <option value="SIM A">SIM A</option>
+                                                                    <option value="SIM B">SIM B</option>
+                                                                    <option value="SIM C">SIM C</option>
+                                                                </select>
+                                                            </div>
+                                                            <small v-if="form.errors.punya_lisensi" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.punya_lisensi }}
+                                                            </small>
+                                                        </div>
+
+                                                        <!-- Keahlian -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="input-group input-group-outline" :class="{ 'is-filled': form.keahlian, 'is-invalid': form.errors.keahlian }">
+                                                                <label class="form-label">Keahlian</label>
+                                                                <input type="text" :maxlength=100 class="form-control" v-model="form.keahlian"
+                                                                    @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                                    @blur="$event.target.parentElement.classList.remove('is-focused')" disabled>
+                                                            </div>
+                                                            <small v-if="form.errors.keahlian" class="text-danger text-xs mt-1 d-block">
+                                                                <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                                                {{ form.errors.keahlian }}
+                                                            </small>
+                                                        </div>
+
+                                                        <!-- Tombol Submit -->
+                                                        <div class="col-12 text-end mt-2 mb-1">
+                                                            <button type="submit" class="btn bg-gradient-dark px-4 py-2" disabled>
+                                                                <i class="material-symbols-rounded text-white me-2">save</i>Simpan Biodata
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form>
-                                        </template>
+                                                </form>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -410,6 +411,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </Layout>
 </template>

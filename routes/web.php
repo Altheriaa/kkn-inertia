@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JadwalKknController;
 use App\Http\Controllers\Admin\LokasiKknController;
 use App\Http\Controllers\Mahasiswa\PendaftaranController;
+use App\Http\Controllers\Mahasiswa\ProfileController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -58,6 +59,8 @@ Route::middleware(['auth.mahasiswa'])->prefix('mahasiswa')->group(function () {
     // Dashboard Mahasiswa
     Route::resource('/pendaftaran', PendaftaranController::class);
 
+    // Profile Route
+    Route::get('/profile', [ProfileController::class, 'index'])->name('mahasiswa.profile');
 });
 
 

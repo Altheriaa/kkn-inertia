@@ -75,7 +75,7 @@
                     </Link>
                 </li>
                 <li class="nav-item">
-                    <Link class="nav-link text-dark" href="/mahasiswa/profile">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/mahasiswa/profile', 'text-dark': $page.url !== '/mahasiswa/profile' }" href="/mahasiswa/profile">
                         <i class="material-symbols-rounded opacity-5">account_circle</i>
                         <span class="nav-link-text ms-1">Profil</span>
                     </Link>

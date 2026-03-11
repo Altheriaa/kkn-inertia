@@ -1,4 +1,3 @@
--- Active: 1770430734899@@127.0.0.1@3306@ft_db_inertia
 <?php
 
 namespace App\Http\Controllers\Admin;
