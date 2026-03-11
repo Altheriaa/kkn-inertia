@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Mahasiswa\DashboardMahasiswaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JadwalKknController;
+use App\Http\Controllers\Admin\LokasiKknController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -42,6 +43,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     // Jadwal KKN
     Route::get('/jadwal-kkn', [JadwalKknController::class, 'index'])->name('admin.jadwal-kkn');
     Route::post('/sinkron-jadwal', [JadwalKknController::class, 'sync'])->name('admin.sinkron.jadwal');
+
+    // Lokasi KKN
+    Route::resource('lokasi-kkn', LokasiKknController::class);
 });
 
 // Mahasiswa Routing

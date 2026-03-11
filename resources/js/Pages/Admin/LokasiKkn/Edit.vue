@@ -1,0 +1,126 @@
+<script setup>
+import Layout from '../../../Layouts/App.vue';
+import { Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+const props = defineProps({
+    lokasiKkn: Object,
+    errors: Object
+})
+
+const form = useForm({
+    kabupaten_kota: props.lokasiKkn.kabupaten_kota,
+    kecamatan: props.lokasiKkn.kecamatan,
+    nama_desa: props.lokasiKkn.nama_desa,
+});
+
+const submit = () => {
+    form.put(`/admin/lokasi-kkn/${props.lokasiKkn.id}`, {
+        preserveScroll: true,
+    });
+};
+</script>
+
+<template>
+    <Layout>
+        <div class="container-fluid py-2 mb-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card my-4">
+                        <!-- Floating Gradient Header -->
+                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                            <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3 d-flex align-items-center">
+                                <div class="d-flex align-items-center ps-3">
+                                    <i class="material-symbols-rounded text-white me-2" style="font-size: 28px;">location_on</i>
+                                    <div>
+                                        <h4 class="text-white text-capitalize mb-0">Edit Lokasi KKN</h4>
+                                        <p class="text-white text-sm mb-0 opacity-8">Ubah data lokasi kkn</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-4 pt-3">
+                            <!-- Action Bar -->
+                            <div class="d-flex justify-content-between align-items-center mb-4 mt-2">
+                                <Link href="/admin/lokasi-kkn" class="btn btn-outline-dark mb-0">
+                                    <i class="material-symbols-rounded text-sm me-1">arrow_back</i> Kembali
+                                </Link>
+                                <span class="badge bg-gradient-dark py-2 px-3">
+                                    <i class="material-symbols-rounded text-sm me-1 align-middle">edit_note</i>
+                                    Form Data Lokasi KKN
+                                </span>
+                            </div>
+
+                            <hr class="horizontal dark mt-0 mb-4">
+
+                            <!-- Form -->
+                            <form @submit.prevent="submit" id="createDosenForm">
+                                <div class="row">
+                                    <!-- Kabupaten / Kota -->
+                                    <div class="col-md-6 mb-4">
+                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.kabupaten_kota, 'is-invalid': form.errors.kabupaten_kota }">
+                                            <label class="form-label">Kabupaten / Kota</label>
+                                            <input type="text" class="form-control" v-model="form.kabupaten_kota"
+                                                @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                @blur="$event.target.parentElement.classList.remove('is-focused')">
+                                        </div>
+                                        <small v-if="form.errors.kabupaten_kota" class="text-danger text-xs mt-1 d-block">
+                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                            {{ form.errors.kabupaten_kota }}
+                                        </small>
+                                    </div>
+
+                                    <!-- Kecamatan -->
+                                    <div class="col-md-6 mb-4">
+                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.kecamatan, 'is-invalid': form.errors.kecamatan }">
+                                            <label class="form-label">Kecamatan</label>
+                                            <input type="text" class="form-control" v-model="form.kecamatan"
+                                                @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                @blur="$event.target.parentElement.classList.remove('is-focused')">
+                                        </div>
+                                        <small v-if="form.errors.kecamatan" class="text-danger text-xs mt-1 d-block">
+                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                            {{ form.errors.kecamatan }}
+                                        </small>
+                                    </div>
+
+                                    <!-- Nama Desa -->
+                                    <div class="col-md-6 mb-4">
+                                        <div class="input-group input-group-outline" :class="{ 'is-filled': form.nama_desa, 'is-invalid': form.errors.nama_desa }">
+                                            <label class="form-label">Nama Desa</label>
+                                            <input type="text" class="form-control" v-model="form.nama_desa"
+                                                @focus="$event.target.parentElement.classList.add('is-focused')"
+                                                @blur="$event.target.parentElement.classList.remove('is-focused')">
+                                        </div>
+                                        <small v-if="form.errors.nama_desa" class="text-danger text-xs mt-1 d-block">
+                                            <i class="material-symbols-rounded text-xs align-middle">error</i>
+                                            {{ form.errors.nama_desa }}
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <hr class="horizontal dark my-3">
+
+                                <!-- Action Buttons -->
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <p class="text-xs text-secondary mb-0">
+                                        <i class="material-symbols-rounded text-xs align-middle me-1">info</i>
+                                        Pastikan semua data terisi dengan benar sebelum menyimpan.
+                                    </p>
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn bg-gradient-dark mb-0" :disabled="form.processing">
+                                            <span v-if="form.processing" class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                            <i v-else class="material-symbols-rounded text-sm me-1">save</i>
+                                            {{ form.processing ? 'Menyimpan...' : 'Simpan Data' }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Layout>
+</template>

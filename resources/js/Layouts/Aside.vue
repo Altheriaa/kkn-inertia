@@ -44,6 +44,12 @@
                         <span class="nav-link-text ms-2">DPL</span>
                     </Link>
                 </li>
+                <li class="nav-item">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/admin/lokasi-kkn'), 'text-dark': !$page.url.startsWith('/admin/lokasi-kkn') }" href="/admin/lokasi-kkn">
+                        <i class="material-symbols-rounded opacity-5">location_on</i>
+                        <span class="nav-link-text ms-2">Lokasi KKN</span>
+                    </Link>
+                </li>
                 <!-- Tambahkan link admin yang lain persis seperti pola di atas... -->
             </template>
 
