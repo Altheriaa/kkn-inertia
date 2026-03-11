@@ -9,6 +9,7 @@ use App\Http\Controllers\Mahasiswa\DashboardMahasiswaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JadwalKknController;
 use App\Http\Controllers\Admin\LokasiKknController;
+use App\Http\Controllers\Mahasiswa\PendaftaranController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -53,6 +54,9 @@ Route::middleware(['auth.mahasiswa'])->prefix('mahasiswa')->group(function () {
 
     // Dashboard Mahasiswa
     Route::get('/dashboard', [DashboardMahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+
+    // Dashboard Mahasiswa
+    Route::resource('/pendaftaran', PendaftaranController::class);
 
 });
 

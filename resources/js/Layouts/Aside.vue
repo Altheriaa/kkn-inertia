@@ -57,15 +57,15 @@
             <!-- Menu Mahasiswa: Muncul bila mahasiswa login -->
             <template v-else-if="$page.props.authMahasiswa.user">
                 <li class="nav-item">
-                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/mahasiswa/dashboard', 'text-dark': $page.url !== '/mahasiswa/dashboarddashboard' }" href="/mahasiswa/dashboard">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/mahasiswa/dashboard', 'text-dark': $page.url !== '/mahasiswa/dashboard' }" href="/mahasiswa/dashboard">
                         <i class="material-symbols-rounded opacity-5">dashboard</i>
                         <span class="nav-link-text ms-1">Dashboard Mahasiswa</span>
                     </Link>
                 </li>
                 <li class="nav-item">
-                    <Link class="nav-link text-dark" href="/mahasiswa/pendaftaran">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/mahasiswa/pendaftaran', 'text-dark': $page.url !== '/mahasiswa/pendaftaran' }" href="/mahasiswa/pendaftaran">
                         <i class="material-symbols-rounded opacity-5">app_registration</i>
-                        <span class="nav-link-text ms-1">Pendaftaran</span>
+                        <span class="nav-link-text ms-1">Pendaftaran / Biodata</span>
                     </Link>
                 </li>
                 <li class="nav-item">
