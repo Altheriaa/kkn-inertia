@@ -58,7 +58,7 @@ class LoginController extends Controller
         Session::put('siakad_token', $data['token']);
         Session::regenerate();
 
-        return redirect()->route('mahasiswa.dashboard');
+        return redirect()->route('mahasiswa.dashboard')->with('success', 'Login berhasil.');
     }
 
     public function logout()

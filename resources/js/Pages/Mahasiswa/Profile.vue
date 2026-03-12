@@ -63,9 +63,6 @@
                                 <i class="material-symbols-rounded text-xs me-1 align-middle">{{ mahasiswa.status_kkn === 'Sudah Daftar' ? 'check_circle' : 'pending' }}</i>
                                 {{ mahasiswa.status_kkn || 'Belum Daftar' }}
                             </span>
-                            <Link href="/admin/mahasiswa" class="btn btn-sm btn-outline-dark mb-0">
-                                <i class="material-symbols-rounded text-sm me-1">arrow_back</i> Kembali
-                            </Link>
                         </div>
                     </div>
                 </div>
