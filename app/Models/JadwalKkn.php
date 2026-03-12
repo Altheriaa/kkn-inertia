@@ -19,13 +19,13 @@ class JadwalKkn extends Model
         'is_active',
     ];
 
-    // public function kelompokKkn()
-    // {
-    //     return $this->hasMany(KelompokKkn::class, 'jadwal_kkn_id');
-    // }
+    public function kelompokKkn()
+    {
+        return $this->hasMany(KelompokKkn::class, 'jadwal_kkn_id');
+    }
 
-    // public function pendaftaranKkn()
-    // {
-    //     return $this->hasMany(PendaftaranKkn::class, 'jadwal_kkn_id');
-    // }
+    public function pendaftaranKkn()
+    {
+        return $this->hasMany(PendaftaranKkn::class, 'jadwal_kkn_id');
+    }
 }

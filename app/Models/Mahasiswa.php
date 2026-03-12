@@ -28,4 +28,15 @@ class Mahasiswa extends Model
         'keahlian',
         'status_kkn'
     ];
+
+    // Satu mahasiswa cuma bisa punya satu payment
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'mahasiswa_id');
+    }
+    
+    public function pendaftaran()
+    {
+        return $this->hasMany(PendaftaranKkn::class, 'mahasiswa_id');
+    }
 }
