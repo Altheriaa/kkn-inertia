@@ -92,34 +92,34 @@
 
     // handle cancle transaction
     const handleCancel = (orderId) => {
-    Swal.fire({
-        title: 'Konfirmasi',
-        text: `Anda yakin ingin membatalkan transaksi ${orderId}?`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#344767',
-        confirmButtonText: 'Ya, Batalkan',
-        cancelButtonText: 'Kembali'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            router.post(route('mahasiswa.pembayaran.cancel-transaction', { order_id: orderId }), {}, {
-            onBefore: () => {
-                loading.value = true;
-            },
-            onSuccess: () => {
-                Swal.fire('Berhasil', 'Transaksi telah dibatalkan.', 'success');
-            },
-            onError: (errors) => {
-                Swal.fire('Gagal', 'Terjadi kesalahan saat membatalkan transaksi.', 'error');
-            },
-            onFinish: () => {
-                loading.value = false;
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: `Anda yakin ingin membatalkan transaksi ${orderId}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#344767',
+            confirmButtonText: 'Ya, Batalkan',
+            cancelButtonText: 'Kembali'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.post(`/mahasiswa/pembayaran/${orderId}/cancel`, {}, {
+                onBefore: () => {
+                    loading.value = true;
+                },
+                onSuccess: () => {
+                    Swal.fire('Berhasil', 'Transaksi telah dibatalkan.', 'success');
+                },
+                onError: (errors) => {
+                    Swal.fire('Gagal', 'Terjadi kesalahan saat membatalkan transaksi.', 'error');
+                },
+                onFinish: () => {
+                    loading.value = false;
+                }
+            });
             }
         });
-        }
-    });
-};
+    };
 
 </script>
 

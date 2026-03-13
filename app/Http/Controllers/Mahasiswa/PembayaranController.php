@@ -181,7 +181,7 @@ class PembayaranController extends Controller
                     'id' => (string) $jenisKknIdDipilih,
                     'price' => (int)$biayaKkn,
                     'quantity' => 1,
-                    'name' => 'KKN ' . $dataFromSiakad['jenis_kkn']
+                    'name' => $dataFromSiakad['jenis_kkn']
                 ]],
                 'customer_details' => [
                     'first_name' => $mahasiswaData['name'],
@@ -233,7 +233,7 @@ class PembayaranController extends Controller
 
             // Update status Payment di database lokal
             $payment->update([
-                'status' => 'cancelled'
+                'status' => 'failed'
             ]);
 
             // Update atau Hapus Pendaftaran agar mahasiswa bisa daftar ulang
@@ -242,15 +242,15 @@ class PembayaranController extends Controller
                 ->where('payment_id', $payment->id)
                 ->delete();
 
-            return redirect()->back()->with('success', 'Transaksi berhasil dibatalkan.');
+            return redirect()->route('mahasiswa.pembayaran')->with('success', 'Transaksi berhasil dibatalkan.');
         });
 
     } catch (\Exception $e) {
         // Jika error dari Midtrans (misal: sudah kadaluarsa), kita tetap izinkan pembatalan lokal
-        $payment->update(['status' => 'cancelled']);
+        $payment->update(['status' => 'failed']);
         DB::table('pendaftaran_kkn')->where('payment_id', $payment->id)->delete();
         
-        return redirect()->back()->with('success', 'Transaksi dibatalkan.');
+        return redirect()->route('mahasiswa.pembayaran')->with('success', 'Transaksi dibatalkan.');
     }
     }
         
