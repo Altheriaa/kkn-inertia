@@ -69,6 +69,12 @@
                     </Link>
                 </li>
                 <li class="nav-item">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url === '/mahasiswa/pembayaran', 'text-dark': $page.url !== '/mahasiswa/pembayaran' }" href="/mahasiswa/pembayaran">
+                        <i class="material-symbols-rounded opacity-5">payment</i>
+                        <span class="nav-link-text ms-1">Pembayaran</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
                     <Link class="nav-link text-dark" href="/mahasiswa/riwayat">
                         <i class="material-symbols-rounded opacity-5">receipt_long</i>
                         <span class="nav-link-text ms-1">Riwayat Pendaftaran</span>

@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.mahasiswa' => \App\Http\Middleware\CheckMahasiswaSession::class,
         ]);
+        // Csrf except for webook notification midtrans
+        $middleware->validateCsrfTokens(except: [
+            'midtrans/notification' 
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

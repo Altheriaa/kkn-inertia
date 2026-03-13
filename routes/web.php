@@ -9,8 +9,10 @@ use App\Http\Controllers\Mahasiswa\DashboardMahasiswaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JadwalKknController;
 use App\Http\Controllers\Admin\LokasiKknController;
+use App\Http\Controllers\Mahasiswa\PembayaranController;
 use App\Http\Controllers\Mahasiswa\PendaftaranController;
 use App\Http\Controllers\Mahasiswa\ProfileController;
+use App\Http\Controllers\MidtransWebhookController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -26,6 +28,9 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/login-admin', [LoginAdminController::class, 'index'])->name('login.admin');
 Route::post('/auth/login/admin', [LoginAdminController::class, 'login'])->name('login.admin.post');
 Route::get('/logout/admin', [LoginAdminController::class, 'logout'])->name('logout.admin');
+
+// Midtrans handler notification
+Route::post('/midtrans/notification', [MidtransWebhookController::class, 'handle']);
 
 // Admin Routing
 Route::middleware(['auth'])->prefix('admin')->group(function () {
@@ -56,9 +61,14 @@ Route::middleware(['auth.mahasiswa'])->prefix('mahasiswa')->group(function () {
     // Dashboard Mahasiswa
     Route::get('/dashboard', [DashboardMahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
 
-    // Dashboard Mahasiswa
+    // Pendaftaran / Biodata Mahasiswa
     Route::resource('/pendaftaran', PendaftaranController::class);
 
+    // Pembayaran
+    Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('mahasiswa.pembayaran');
+    Route::post('/pembayaran/create-transaction', [PembayaranController::class, 'createTransaction'])->name('mahasiswa.pembayaran.create-transaction');
+    Route::post('/pembayaran/{order_id}/cancel', [PembayaranController::class, 'cancelTransaction'])->name('mahasiswa.pembayaran.cancel');
+    
     // Profile Route
     Route::get('/profile', [ProfileController::class, 'index'])->name('mahasiswa.profile');
 });
