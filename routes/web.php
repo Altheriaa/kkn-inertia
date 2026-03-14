@@ -66,8 +66,15 @@ Route::middleware(['auth.mahasiswa'])->prefix('mahasiswa')->group(function () {
 
     // Pembayaran
     Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('mahasiswa.pembayaran');
-    Route::post('/pembayaran/create-transaction', [PembayaranController::class, 'createTransaction'])->name('mahasiswa.pembayaran.create-transaction');
-    Route::post('/pembayaran/{orderId}/cancel', [PembayaranController::class, 'cancelTransaction'])->name('mahasiswa.pembayaran.cancel-transaction');
+    Route::post('/pembayaran/create-transaction', [PembayaranController::class, 'createTransaction']);
+    Route::post('/pembayaran/{orderId}/cancel', [PembayaranController::class, 'cancelTransaction']);
+
+    // Riwayat Transaksi
+    Route::get('/riwayat-transaksi', [PembayaranController::class, 'riwayatTransaksi']);
+    // Cetak Invoice
+    Route::get('/riwayat-transaksi/invoice/{orderId}', [PembayaranController::class, 'cetakTransaksi']);
+    // Cetak Formulir
+    Route::get('/riwayat-transaksi/formulir/{orderId}', [PembayaranController::class, 'cetakPendaftaran']);
     
     // Profile Route
     Route::get('/profile', [ProfileController::class, 'index'])->name('mahasiswa.profile');

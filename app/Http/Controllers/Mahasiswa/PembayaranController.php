@@ -15,6 +15,7 @@ use App\Models\Mahasiswa;
 use App\Models\Payment;
 use App\Models\PendaftaranKkn;
 use Midtrans\Transaction;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PembayaranController extends Controller
 {
@@ -252,6 +253,66 @@ class PembayaranController extends Controller
         
         return redirect()->route('mahasiswa.pembayaran')->with('success', 'Transaksi dibatalkan.');
     }
+    }
+
+    public function riwayatTransaksi()
+    {
+        $mahasiswaId = Session::get('mahasiswa_data');
+
+        // ambil payment sesuai mahasiswa id
+        $payments = Payment::where('mahasiswa_id', $mahasiswaId['id'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        $mahasiswa = Mahasiswa::where('id', $mahasiswaId)->first();
+
+        return Inertia::render('Mahasiswa/RiwayatTransaksi', [
+            'payments' => $payments,
+            'mahasiswa' => $mahasiswa
+        ]);
+    }
+
+    public function cetakTransaksi($orderId)
+    {
+        // Ambil ID mahasiswa dari session
+        $mahasiswaId = Session::get('mahasiswa_data')['id'];
+
+        $payment = Payment::with('mahasiswa')
+            ->where('order_id', $orderId)
+            ->where('mahasiswa_id', $mahasiswaId)
+            ->where('status', 'success')
+            ->firstOrFail();
+
+        $data = [
+            'payment' => $payment
+        ];
+
+        $pdf = Pdf::loadView('pdf.Mahasiswa.Invoice', $data);
+
+        return $pdf->stream('Invoice-' . $payment->order_id . '.pdf');
+    }
+
+    public function cetakPendaftaran($orderId)
+    {
+        // Ambil ID mahasiswa dari session
+        $mahasiswaId = Session::get('mahasiswa_data')['id'];
+
+        $payment = Payment::with('mahasiswa')
+            ->where('order_id', $orderId)
+            ->where('mahasiswa_id', $mahasiswaId)
+            ->where('status', 'success')
+            ->firstOrFail();
+
+        $mahasiswa = Mahasiswa::where('id', $mahasiswaId)->first();
+
+        $data = [
+            'payment' => $payment,
+            'mahasiswa' => $mahasiswa
+        ];
+
+        $pdf = Pdf::loadView('pdf.Mahasiswa.Formulir', $data);
+
+        return $pdf->stream('formulir-pendaftaran-' . $mahasiswa->nama . '.pdf');
     }
         
 }
