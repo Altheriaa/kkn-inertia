@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '../../../Layouts/App.vue';
+import Layout from '../../Layouts/App.vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { ref, computed, watch, onMounted } from 'vue';
 import Swal from 'sweetalert2';

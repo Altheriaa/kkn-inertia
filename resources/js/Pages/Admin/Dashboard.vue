@@ -5,6 +5,35 @@
     import { ref, watch, onMounted } from 'vue';
     import Swal from 'sweetalert2';
 
+    // data controller
+    // Data Props From Controller
+    const props = defineProps({
+        jadwal_kkn: Object,
+        jadwal_kkn_dash: Object,
+        jenisKknList: Object,
+        mahasiswaCount: Object,
+        totalAktif: Object,
+        transaksiCount: Object,
+        pendaftarPeriode: Object,
+    });
+
+    // Format Rupiah
+    const formatCurrency = (value) => {
+        if (value === undefined || value === null) return 'Rp 0';
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(value);
+    };
+
+    // Format tanggal
+    const formatDate = (dateStr) => {
+        if (!dateStr) return '-';
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+    };
+
     const page = usePage();
 
     const showFlashMessage = () => {
@@ -88,7 +117,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">Semester</p>
-                                    <h5 class="mb-0"></h5>
+                                    <h5 class="mb-0">{{ jadwal_kkn_dash.nama_periode || '-' }}</h5>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -108,7 +137,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">Jumlah Mahasiswa</p>
-                                    <h4 class="mb-0">{{ $mahasiswaCount }}</h4>
+                                    <h4 class="mb-0">{{ mahasiswaCount }}</h4>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -128,7 +157,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">KKN Aktif</p>
-                                    <h4 class="mb-0">{{ $totalAktif }}</h4>
+                                    <h4 class="mb-0">{{ totalAktif }}</h4>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -148,7 +177,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">Jumlah Transaksi</p>
-                                    <h4 class="mb-0">{{ $transaksiCount }}</h4>
+                                    <h4 class="mb-0">{{ transaksiCount }}</h4>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -201,12 +230,11 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1 ps-3">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">
-                                                            <!-- @if($jadwal_kkn)
-                                                                {{ $jadwal_kkn->nama_periode }}
-                                                            @else
-                                                                Tidak Ada Jadwal
-                                                            @endif -->
+                                                        <h6 v-if="jadwal_kkn" class="mb-0 text-sm">
+                                                            {{ jadwal_kkn.nama_periode }}
+                                                        </h6>
+                                                        <h6 v-else class="mb-0 text-sm">
+                                                            Tidak Ada Jadwal
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -214,37 +242,35 @@
 
                                             <!-- {{-- Kolom Tanggal Dibuka (Ini sudah benar) --}} -->
                                             <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold">
-                                                    <!-- @if($jadwal_kkn)
-                                                        {{ \Carbon\Carbon::parse($jadwal_kkn['tanggal_dibuka'])->format('d M Y') }}
-                                                    @else
-                                                        -
-                                                    @endif -->
+                                                <span v-if="jadwal_kkn" class="text-xs font-weight-bold">
+                                                    {{ formatDate(jadwal_kkn.tanggal_dibuka)  }}
+                                                </span>
+                                                <span v-else class="text-xs font-weight-bold">
+                                                    -
                                                 </span>
                                             </td>
 
                                             <!-- {{-- Kolom Tanggal Ditutup (Ini sudah benar) --}} -->
                                             <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold">
-                                                    <!-- @if($jadwal_kkn)
-                                                        {{ \Carbon\Carbon::parse($jadwal_kkn['tanggal_ditutup'])->format('d M Y') }}
-                                                    @else
-                                                        -
-                                                    @endif -->
+                                                <span v-if="jadwal_kkn" class="text-xs font-weight-bold">
+                                                    {{ formatDate(jadwal_kkn.tanggal_ditutup)  }}
+                                                </span>
+                                                <span v-else class="text-xs font-weight-bold">
+                                                    -
                                                 </span>
                                             </td>
 
                                             <!-- {{-- Kolom Status (Baru, karena datanya ada) --}} -->
-                                            <td class="align-middle text-center text-sm">
-                                                <!-- @if($jadwal_kkn)
-                                                    @if ($jadwal_kkn->is_active == true)
-                                                        <span class="badge badge-sm bg-gradient-success">Dibuka</span>
-                                                    @else
-                                                        <span class="badge badge-sm bg-gradient-secondary">Ditutup</span>
-                                                    @endif
-                                                @else
-                                                    <span class="badge badge-sm bg-gradient-secondary">Tidak Ada Jadwal</span>
-                                                @endif -->
+                                            <td v-if="jadwal_kkn" class="align-middle text-center text-sm">
+                                                <span v-if="jadwal_kkn.is_active" class="badge badge-sm bg-gradient-success">
+                                                    Dibuka
+                                                </span>
+                                                <span v-else class="badge badge-sm bg-gradient-secondary">
+                                                    Ditutup
+                                                </span>
+                                            </td>
+                                            <td v-else class="align-middle text-center text-sm">
+                                                <span class="badge badge-sm bg-gradient-secondary">Tidak Ada Jadwal</span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -276,38 +302,36 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- @forelse ($jenisKknList as $jenis)
-                                            <tr>
-                                                {{-- Kolom Prodi --}}
+                                        <template v-if="jenisKknList && jenisKknList.length > 0">
+                                            <tr v-for="jenis in jenisKknList" :key="jenis.id">
+                                                <!-- Kolom Prodi -->
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">
-                                                                {{ $jenis['nama_jenis'] }}
+                                                                {{ jenis.nama_jenis }}
                                                             </h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 text-sm text">
-                                                        Rp {{ number_format($jenis['biaya']) }}
+                                                        {{ formatCurrency(jenis.biaya) }}
                                                     </h6>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
-                                                    @if ($jenis['is_active'])
-                                                        <span class="badge badge-sm bg-gradient-success">Aktif</span>
-                                                    @else
-                                                        <span class="badge badge-sm bg-gradient-secondary">Nonaktif</span>
-                                                    @endif
+                                                    <span v-if="jenis.is_active" class="badge badge-sm bg-gradient-success">Aktif</span>
+                                                    <span v-else class="badge badge-sm bg-gradient-secondary">Nonaktif</span>
                                                 </td>
                                             </tr>
-                                        @empty
+                                        </template>
+                                        <template v-else>
                                             <tr>
                                                 <td colspan="3" class="text-center text-secondary">
                                                     Tidak ada jenis KKN tersedia.
                                                 </td>
                                             </tr>
-                                        @endforelse -->
+                                        </template>
                                     </tbody>
                                 </table>
                             </div>

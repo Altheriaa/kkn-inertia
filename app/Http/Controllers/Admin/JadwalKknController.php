@@ -15,7 +15,7 @@ class JadwalKknController extends Controller
     {
         $jadwalkkn = JadwalKkn::orderBy('id_siakad', 'desc')->first();
 
-        return Inertia::render("Admin/JadwalKkn/Index", [
+        return Inertia::render("Admin/JadwalKkn", [
             'jadwalkkn' => $jadwalkkn,  
         ]);
     }

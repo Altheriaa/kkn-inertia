@@ -9,6 +9,7 @@ use App\Http\Controllers\Mahasiswa\DashboardMahasiswaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JadwalKknController;
 use App\Http\Controllers\Admin\LokasiKknController;
+use App\Http\Controllers\Admin\PembayaranAdminController;
 use App\Http\Controllers\Mahasiswa\PembayaranController;
 use App\Http\Controllers\Mahasiswa\PendaftaranController;
 use App\Http\Controllers\Mahasiswa\ProfileController;
@@ -42,17 +43,26 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/sync-mahasiswa', [DashboardController::class, 'sync'])->name('admin.sync-mahasiswa');
 
     // Dosen / DPL
-    Route::resource('dosen-dpl', DosenDplController::class);
+    Route::resource('/dosen-dpl', DosenDplController::class);
 
     // Mahasiswa
-    Route::resource('mahasiswa', MahasiswaController::class);
+    Route::resource('/mahasiswa', MahasiswaController::class);
+
+    // Riwayat Transaksi 
+    Route::get('/riwayat-transaksi', [PembayaranAdminController::class, 'index']);
+    // Cetak Invoice
+    Route::get('/riwayat-transaksi/invoice/{orderId}', [PembayaranAdminController::class, 'cetakTransaksi']);
+    // Cetak Formulir
+    Route::get('/riwayat-transaksi/formulir/{orderId}', [PembayaranAdminController::class, 'cetakPendaftaran']);
+    // Hapus Transaksi
+    Route::delete('/riwayat-transaksi/hapus/{orderId}', [PembayaranAdminController::class, 'hapusTransaksi']);
 
     // Jadwal KKN
     Route::get('/jadwal-kkn', [JadwalKknController::class, 'index'])->name('admin.jadwal-kkn');
     Route::post('/sinkron-jadwal', [JadwalKknController::class, 'sync'])->name('admin.sinkron.jadwal');
 
     // Lokasi KKN
-    Route::resource('lokasi-kkn', LokasiKknController::class);
+    Route::resource('/lokasi-kkn', LokasiKknController::class);
 });
 
 // Mahasiswa Routing
@@ -77,7 +87,7 @@ Route::middleware(['auth.mahasiswa'])->prefix('mahasiswa')->group(function () {
     Route::get('/riwayat-transaksi/formulir/{orderId}', [PembayaranController::class, 'cetakPendaftaran']);
     
     // Profile Route
-    Route::get('/profile', [ProfileController::class, 'index'])->name('mahasiswa.profile');
+    Route::get('/profile', [ProfileController::class, 'index']);
 });
 
 
