@@ -14,6 +14,8 @@ use App\Http\Controllers\Mahasiswa\PembayaranController;
 use App\Http\Controllers\Mahasiswa\PendaftaranController;
 use App\Http\Controllers\Mahasiswa\ProfileController;
 use App\Http\Controllers\MidtransWebhookController;
+use App\Http\Controllers\Admin\PlottingController;
+use App\Http\Controllers\Mahasiswa\HasilPlottingController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -63,6 +65,13 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     // Lokasi KKN
     Route::resource('/lokasi-kkn', LokasiKknController::class);
+
+    // Plotting 
+    Route::resource('/plotting', PlottingController::class);
+    // Kelola Anggota
+    Route::get('/plotting/{id}/kelola-anggota', [PlottingController::class, 'kelolaAnggota']);
+    // Cetak Laporan Kelompok
+    Route::get('/plotting/{id}/cetak-kelompok', [PlottingController::class, 'cetakLaporanKelompok']);
 });
 
 // Mahasiswa Routing
@@ -85,6 +94,11 @@ Route::middleware(['auth.mahasiswa'])->prefix('mahasiswa')->group(function () {
     Route::get('/riwayat-transaksi/invoice/{orderId}', [PembayaranController::class, 'cetakTransaksi']);
     // Cetak Formulir
     Route::get('/riwayat-transaksi/formulir/{orderId}', [PembayaranController::class, 'cetakPendaftaran']);
+
+    // Hasil Plotting 
+    Route::get('/plotting', [HasilPlottingController::class, 'index']);
+    // Cetak Laporan Kelompok
+    Route::get('/plotting/{id}/cetak-kelompok', [HasilPlottingController::class, 'cetakLaporanKelompok']);
     
     // Profile Route
     Route::get('/profile', [ProfileController::class, 'index']);

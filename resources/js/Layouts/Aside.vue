@@ -56,6 +56,18 @@
                         <span class="nav-link-text ms-2">Lokasi KKN</span>
                     </Link>
                 </li>
+                <li class="nav-item">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/admin/plotting'), 'text-dark': !$page.url.startsWith('/admin/plotting') }" href="/admin/plotting">
+                        <i class="material-symbols-rounded opacity-5">add_location_alt</i>
+                        <span class="nav-link-text ms-2">Plotting</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/admin/rekapitulasi-mahasiswa'), 'text-dark': !$page.url.startsWith('/admin/rekapitulasi-mahasiswa') }" href="/admin/rekapitulasi-mahasiswa">
+                        <i class="material-symbols-rounded opacity-5">clinical_notes</i>
+                        <span class="nav-link-text ms-2">Rekapitulasi Mahasiswa</span>
+                    </Link>
+                </li>
                 <!-- Tambahkan link admin yang lain persis seperti pola di atas... -->
             </template>
 
@@ -84,6 +96,12 @@
                     <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/mahasiswa/riwayat-transaksi'), 'text-dark': !$page.url.startsWith('/mahasiswa/riwayat-transaksi') }" href="/mahasiswa/riwayat-transaksi">
                         <i class="material-symbols-rounded opacity-5">receipt_long</i>
                         <span class="nav-link-text ms-1">Riwayat Transaksi</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link" :class="{ 'active bg-gradient-dark text-white': $page.url.startsWith('/mahasiswa/plotting'), 'text-dark': !$page.url.startsWith('/mahasiswa/plotting') }" href="/mahasiswa/plotting">
+                        <i class="material-symbols-rounded opacity-5">add_location_alt</i>
+                        <span class="nav-link-text ms-2">Penempatan Mahasiswa</span>
                     </Link>
                 </li>
                 <li class="nav-item">

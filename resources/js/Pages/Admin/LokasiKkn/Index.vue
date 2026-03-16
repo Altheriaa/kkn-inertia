@@ -152,7 +152,7 @@ watch(() => page.props.flash, () => {
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3 d-flex align-items-center justify-content-between px-4">
                                 <div class="d-flex align-items-center">
-                                    <i class="material-symbols-rounded text-white me-3" style="font-size: 28px;">groups</i>
+                                    <i class="material-symbols-rounded text-white me-3" style="font-size: 28px;">location_on</i>
                                     <div>
                                         <h4 class="text-white text-capitalize mb-0">Lokasi KKN</h4>
                                         <p class="text-white text-sm mb-0 opacity-8">Kelola data lokasi KKN</p>
@@ -216,7 +216,7 @@ watch(() => page.props.flash, () => {
                                         <tr v-if="!lokasiKkns || !lokasiKkns.data || lokasiKkns.data.length === 0">
                                             <td colspan="6" class="text-center py-5">
                                                 <div class="d-flex flex-column align-items-center">
-                                                    <i class="material-symbols-rounded opacity-3 mb-2" style="font-size: 64px;">group_off</i>
+                                                    <i class="material-symbols-rounded opacity-3 mb-2" style="font-size: 64px;">location_on</i>
                                                     <h6 class="text-secondary mb-1">Belum Ada Data</h6>
                                                     <p class="text-xs text-secondary mb-3">Data lokasi KKN masih kosong.</p>
                                                     <Link href="/admin/lokasi_kkn/create" class="btn btn-sm bg-gradient-dark mb-0">

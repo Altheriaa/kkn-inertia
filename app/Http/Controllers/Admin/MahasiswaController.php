@@ -15,11 +15,13 @@ class MahasiswaController extends Controller
         $status = $request->input('status');
 
         $mahasiswas = Mahasiswa::when($search, function ($query, $search) {
-                $query->where('nim', 'like', "%{$search}%")
-                      ->orWhere('nama', 'like', "%{$search}%")
-                      ->orWhere('prodi', 'like', "%{$search}%")
-                      ->orWhere('fakultas', 'like', "%{$search}%")
-                      ->orWhere('email', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('nim', 'like', "%{$search}%")
+                    ->orWhere('nama', 'like', "%{$search}%")
+                    ->orWhere('prodi', 'like', "%{$search}%")
+                    ->orWhere('fakultas', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+                });
             })
             ->when($status, function ($query, $status) {
                 $query->where('status_kkn', $status);

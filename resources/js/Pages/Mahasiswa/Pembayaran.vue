@@ -241,7 +241,7 @@
                             <!-- Form -->
                             <form>
                                 <div class="row">
-                                    <!-- Kabupaten Kota -->
+                                    <!-- Pilih KKN -->
                                     <div class="col-md-12 mb-4">
                                         <div class="input-group input-group-outline">
                                             <label class="form-label pt-1" style="z-index: 1;"></label>
