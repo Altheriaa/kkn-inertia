@@ -60,7 +60,7 @@
                         </li>
                     @endif -->
 
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Page</li>
+                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{ $page.props.title }}</li>
                 </ol>
             </nav>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">

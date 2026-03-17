@@ -16,6 +16,7 @@ use App\Http\Controllers\Mahasiswa\ProfileController;
 use App\Http\Controllers\MidtransWebhookController;
 use App\Http\Controllers\Admin\PlottingController;
 use App\Http\Controllers\Mahasiswa\HasilPlottingController;
+use App\Http\Controllers\Admin\RekapitulasiMahasiswaController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -72,6 +73,10 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/plotting/{id}/kelola-anggota', [PlottingController::class, 'kelolaAnggota']);
     // Cetak Laporan Kelompok
     Route::get('/plotting/{id}/cetak-kelompok', [PlottingController::class, 'cetakLaporanKelompok']);
+
+    // Rekapitulasi Mahasiswa
+    Route::get('/rekapitulasi-mahasiswa', [RekapitulasiMahasiswaController::class, 'index']);
+    Route::get('/rekapitulasi-mahasiswa-cetak', [RekapitulasiMahasiswaController::class, 'cetakRekapitulasi']);
 });
 
 // Mahasiswa Routing
