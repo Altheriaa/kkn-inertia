@@ -92,23 +92,19 @@ const isOpen = now >= props.jadwalKkn.tanggal_dibuka && now <= props.jadwalKkn.t
             pendekatan lintas keilmuan dan sektoral pada waktu dan daerah tertentu.
           </p>
           <div class="d-flex flex-column flex-sm-row gap-3">
-            <a href="{{ route('login') }}" class="btn btn-white btn-lg">
+            <Link href="/login" class="btn btn-white btn-lg">
               <i class="material-symbols-rounded me-2">how_to_reg</i> Daftar KKN
-            </a>
-            <a href="#panduan" class="btn btn-outline-white btn-lg">
+            </Link>
+            <Link href="#panduan" class="btn btn-outline-white btn-lg">
               <i class="material-symbols-rounded me-2">info</i> Pelajari Lebih Lanjut
-            </a>
+            </Link>
           </div>
         </div>
         <div class="col-lg-5">
           <div class="row g-3">
-            <div class="col-6">
-              <div class="card text-center p-4 shadow">
-                <h2 class="text-dark fw-bold mb-2">{{ lokasiKkns.length }}</h2>
-                <p class="text-secondary mb-0">Lokasi KKN</p>
-              </div>
+            <div class="col-3">
             </div>
-            <div class="col-6">
+            <div class="col-9">
               <div class="card text-center p-4 shadow">
                 <h2 class="text-dark fw-bold mb-2">{{ jadwalKkn.nama_periode }}</h2>
                 <p class="text-secondary mb-0">Periode KKN</p>
