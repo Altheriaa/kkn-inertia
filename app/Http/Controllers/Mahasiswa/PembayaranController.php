@@ -89,6 +89,7 @@ class PembayaranController extends Controller
 
         // 3. Kirim OBJEK mahasiswa ke view
         return Inertia::render('Mahasiswa/Pembayaran', [
+            'title' => 'Pembayaran',
             'mahasiswa' => $mahasiswa,
             'jenisKknList' => $jenisKknList,
             'pendingPayment' => $pendingPayment
@@ -267,6 +268,7 @@ class PembayaranController extends Controller
         $mahasiswa = Mahasiswa::where('id', $mahasiswaId)->first();
 
         return Inertia::render('Mahasiswa/RiwayatTransaksi', [
+            'title' => 'Riwayat Transaksi',
             'payments' => $payments,
             'mahasiswa' => $mahasiswa
         ]);

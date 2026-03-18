@@ -196,7 +196,8 @@
                 <th>Nama Mahasiswa</th>
                 <th>Fakultas / Prodi</th>
                 <th width="30">L/P</th>
-                <th>No. HP</th>
+                <th width="30">No. HP</th>
+                <th>Kelompok / Lokasi</th>
             </tr>
         </thead>
         <tbody>
@@ -211,6 +212,7 @@
                     </td>
                     <td class="text-center">{{ $pendaftaran->mahasiswa->jenis_kelamin }}</td>
                     <td class="text-center">{{ $pendaftaran->mahasiswa->no_hp }}</td>
+                    <td class="text-center">{{ $pendaftaran->kelompokKkn->nama_kelompok ?? 'Belum Ditempatkan' }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -34,6 +34,7 @@ class PembayaranAdminController extends Controller
             ->withQueryString();
 
         return Inertia::render("Admin/RiwayatTransaksi", [
+            'title' => 'Riwayat Transaksi',
             'payments' => $payments,
             'filters' => [
                 'search' => $search,

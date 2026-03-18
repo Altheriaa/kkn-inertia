@@ -230,38 +230,44 @@ watch(() => page.props.flash, () => {
                                         <!-- Data Rows -->
                                         <tr v-if="kelompok"
                                             class="table-row-hover">
-                                            <td>
-                                                <div class="d-flex px-3 py-1">
+                                            <td class="ps-4">
+                                                <div class="d-flex py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm font-weight-bold">{{ kelompok.jadwal_kkn.nama_periode }}</h6>
+                                                        <h6 class="mb-0 text-sm font-weight-bold">{{ kelompok.jadwal_kkn?.nama_periode }}</h6>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{ kelompok.kelompok_kkn.dosen_dpl.nama_dosen }}</p>
+                                                <p class="text-sm font-weight-bold mb-0">{{ kelompok.kelompok_kkn?.dosen_dpl?.nama_dosen }}</p>
                                             </td> 
                                             <td>
-                                                <span class="badge bg-gradient-success py-1 px-3"> {{ kelompok.kelompok_kkn.dosen_dpl.nama_dosen }}</span>
+                                                <span class="badge bg-gradient-success py-1 px-3"> 
+                                                    {{ kelompok.kelompok_kkn?.lokasi_kkn?.nama_desa }}
+                                                </span>
                                             </td> 
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{ kelompok.kelompok_kkn.lokasi_kkn.nama_desa }}</p>
+                                                <p class="text-sm font-weight-bold mb-0">
+                                                    {{ kelompok.kelompok_kkn?.nama_kelompok }}
+                                                </p>
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0">{{ kelompok.jenis_kkn }}</p>
                                             </td>
                                             <td>
                                                 <div class="align-middle text-center text-sm">
-                                                    <div class="d-flex align-items-center justify-content-center" v-with="progress = getProgressData(kelompok.pendaftaran_kkn_count)">
-                                                        <span class="me-2 text-xs font-weight-bold">{{ getProgressData(kelompok.pendaftaran_kkn_count).count }} / {{ maxKuota }}</span>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <span class="me-2 text-xs font-weight-bold">
+                                                            {{ pendaftaranKkn }} / {{ maxKuota }}
+                                                        </span>
                                                         <div>
                                                             <div class="progress" style="width: 100px; height: 6px;">
                                                                 <div class="progress-bar" 
-                                                                    :class="`bg-gradient-${getProgressData(kelompok.pendaftaran_kkn_count).color}`"
+                                                                    :class="`bg-gradient-${getProgressData(pendaftaranKkn).color}`"
                                                                     role="progressbar"
-                                                                    :aria-valuenow="getProgressData(kelompok.pendaftaran_kkn_count).percentage" 
+                                                                    :aria-valuenow="getProgressData(pendaftaranKkn).percentage" 
                                                                     aria-valuemin="0" 
                                                                     aria-valuemax="100"
-                                                                    :style="{ width: getProgressData(kelompok.pendaftaran_kkn_count).percentage + '%' }">
+                                                                    :style="{ width: getProgressData(pendaftaranKkn).percentage + '%' }">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -270,14 +276,14 @@ watch(() => page.props.flash, () => {
                                             </td>
                                             <!-- Aksi -->
                                             <td class="align-middle text-center">
-                                                <Link :href="`/admin/plotting/${kelompok.id}/kelola-anggota`"
+                                                <Link :href="`/mahasiswa/plotting/${kelompok.id}/detail-kelompok`"
                                                     class="btn btn-link text-success mb-0 px-2 py-1"
-                                                    title="Kelola Anggota">
+                                                    title="Detail Kelompok">
                                                     <i class="material-symbols-rounded text-lg">info</i>
                                                 </Link>
                                                 <a :href="`/mahasiswa/plotting/${kelompok.id}/cetak-kelompok`"
                                                     target="_blank"
-                                                    class="btn btn-link text-success mb-0 px-2 py-1"
+                                                    class="btn btn-link text-info mb-0 px-2 py-1"
                                                     title="Cetak Kelompok">
                                                     <i class="material-symbols-rounded text-lg">print</i>
                                                 </a>

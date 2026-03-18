@@ -42,7 +42,7 @@ class RekapitulasiMahasiswaController extends Controller
         } catch (\Exception $e) {
         }
 
-        $query = PendaftaranKkn::with(['mahasiswa', 'jadwalKkn'])
+        $query = PendaftaranKkn::with(['mahasiswa', 'jadwalKkn', 'kelompokKkn'])
             ->where('status_pendaftaran', 'valid');
 
         if ($search) {
@@ -76,6 +76,7 @@ class RekapitulasiMahasiswaController extends Controller
         $selectedJenisKkn = $listKkn->firstWhere('id', $statusJenisKkn)['nama_jenis'] ?? 'Semua Jenis KKN';
 
         return Inertia::render('Admin/RekapitulasiMahasiswa', [
+            'title' => 'Rekapitulasi Mahasiswa',
             'listJadwal' => $listJadwal,
             'listKkn' => $listKkn,
             'pendaftarans' => $pendaftarans,
@@ -125,7 +126,7 @@ class RekapitulasiMahasiswaController extends Controller
         } catch (\Exception $e) {
         }
 
-        $query = PendaftaranKkn::with('mahasiswa')
+        $query = PendaftaranKkn::with(['mahasiswa', 'kelompokKkn'])
             ->where('status_pendaftaran', 'valid');
 
         if ($statusJadwal) {

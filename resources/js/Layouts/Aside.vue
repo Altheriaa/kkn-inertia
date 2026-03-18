@@ -1,13 +1,18 @@
 <script setup>
     import { Link } from '@inertiajs/vue3';
+
+    const closeSidenav = () => {
+        const body = document.getElementsByTagName('body')[0];
+        body.classList.remove('g-sidenav-pinned');
+    };
 </script>
 
 <template>
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2"
     id="sidenav-main">
     <div class="sidenav-header">
-        <i class="material-symbols-rounded p-3 cursor-pointer text-dark opacity-5 position-absolute top-0 d-none d-xl-none"
-            aria-hidden="true" id="iconSidenav">close</i>
+        <i class="material-symbols-rounded p-3 cursor-pointer text-dark opacity-5 position-absolute top-0 d-block d-xl-none"
+            aria-hidden="true" id="iconSidenav" @click="closeSidenav">close</i>
         <Link class="navbar-brand px-4 py-3 m-0" href="/">
             <img src="/assets/img/Unaya.png" class="navbar-brand-img" width="26" height="26"
                 alt="main_logo">

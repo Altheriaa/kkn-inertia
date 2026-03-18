@@ -12,10 +12,10 @@ use Illuminate\Validation\Rule;
 use App\Models\KelompokKkn;
 use App\Models\PendaftaranKkn;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
 class PlottingController extends Controller
 {
-
     public function index(Request $request) {
 
         $listJadwal = JadwalKkn::orderBy('id_siakad', 'desc')->get();
@@ -50,6 +50,7 @@ class PlottingController extends Controller
             ->withQueryString();
 
         return Inertia::render('Admin/Plotting/Index', [
+            'title' => 'Plotting',
             'listJadwal' => $listJadwal,
             'kelompoks' => $kelompoks,
             'filters' => ['search' => $search, 'status' => $status],
@@ -78,6 +79,7 @@ class PlottingController extends Controller
         })->get();
 
         return Inertia::render('Admin/Plotting/Create', [
+            'title' => 'Plotting / Create',
             'jadwalKkns' => $jadwalKkns,
             'dosenDpls' => $dosenDpls,
             'lokasiKkns' => $lokasiKkns,
@@ -157,6 +159,7 @@ class PlottingController extends Controller
         })->get();
 
         return Inertia::render('Admin/Plotting/Edit', [
+            'title' => 'Plotting / Edit',
             'jadwalKkns' => $jadwalKkns,
             'dosenDpls' => $dosenDpls,
             'lokasiKkns' => $lokasiKkns,
@@ -244,6 +247,7 @@ class PlottingController extends Controller
         ->get();
 
         return Inertia::render('Admin/Plotting/KelolaAnggota', [
+            'title' => 'Plotting / Kelola Anggota',
             'kelompok' => $kelompok,
             'kandidat' => $kandidat,
             'anggota' => $anggota
@@ -251,6 +255,33 @@ class PlottingController extends Controller
     }
     
     // sync anggota ke 
+    public function syncAnggota(Request $request, $id)
+    {
+        $request->validate([
+            'anggota_ids' => 'nullable|array',
+            'anggota_ids.*' => 'exists:pendaftaran_kkn,id'
+        ]);
+
+        try {
+            DB::transaction(function () use ($request, $id) {
+                // 1. Lepas semua anggota lama dari kelompok ini
+                PendaftaranKkn::where('kelompok_kkn_id', $id)
+                    ->update(['kelompok_kkn_id' => null]);
+
+                // 2. Pasang anggota baru (jika ada)
+                if ($request->filled('anggota_ids')) {
+                    PendaftaranKkn::whereIn('id', $request->anggota_ids)
+                        ->update(['kelompok_kkn_id' => $id]);
+                }
+            });
+
+            return back()->with('success', 'Perubahan anggota kelompok berhasil disimpan!');
+            
+        } catch (\Exception $e) {
+            // Jika ada error (DB mati, dll), balikkan dengan pesan error
+            return back()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
+        }
+    }
 
     public function cetakLaporanKelompok($id)
     {

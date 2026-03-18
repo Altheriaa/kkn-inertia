@@ -37,6 +37,7 @@ class PendaftaranController extends Controller
         $mahasiswa = Mahasiswa::find($mahasiswaSession['id']);
 
         return Inertia::render('Mahasiswa/Pendaftaran', [
+            'title' => 'Pendaftaran',
             'mahasiswa' => $mahasiswa
         ]);
     }

@@ -41,6 +41,7 @@ class DashboardMahasiswaController extends Controller
         }
 
         return Inertia::render('Mahasiswa/Dashboard', [
+            'title' => 'Dashboard',
             'jadwalKkn' => $jadwalKkn,
             'jenisKknList' => $jenisKknList,
             'mahasiswaSession' => $mahasiswaSession,

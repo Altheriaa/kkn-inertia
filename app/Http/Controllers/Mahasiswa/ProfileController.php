@@ -22,6 +22,7 @@ class ProfileController extends Controller
         $mahasiswa = Mahasiswa::find($mahasiswaSession['id']);
         return Inertia::render('Mahasiswa/Profile', 
             [
+                'title' => 'Profile',
                 'mahasiswa' => $mahasiswa
             ]
         );

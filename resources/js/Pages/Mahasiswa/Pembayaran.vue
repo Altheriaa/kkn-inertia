@@ -256,21 +256,25 @@
                                 </div>
 
                                 <!-- Action Buttons -->
-                                <div class="d-flex justify-content-between align-items-center mt-2">
-                                    <p class="text-xs text-secondary mb-0">
-                                        <i class="material-symbols-rounded text-xs align-middle me-1">info</i>
-                                        Pastikan memilih KKN dengan benar sebelum melakukan pembayaran.
-                                    </p>
-                                    <div class="d-flex gap-2">
-                                        <!-- <button type="reset" class="btn btn-outline-secondary px-3" @click="form.reset()">
-                                            <i class="material-symbols-rounded me-1">restart_alt</i>
-                                            Reset
-                                        </button> -->
-                                        <button type="button" @click="handleCheckout" :disabled="loading" class="btn btn bg-gradient-dark px-3">
+                                <div class="mt-2">
+                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                                        
+                                        <p class="text-xs text-secondary mb-0 text-center text-md-start">
+                                            <i class="material-symbols-rounded text-xs align-middle me-1">info</i>
+                                            Pastikan memilih KKN dengan benar sebelum melakukan pembayaran.
+                                        </p>
+
+                                        <button type="button" @click="handleCheckout" :disabled="loading" 
+                                            class="btn bg-gradient-dark mb-0 py-2 px-3 w-100 w-md-auto">
+                                            
                                             <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
-                                            <i v-else class="material-symbols-rounded me-1">credit_card</i>
-                                            {{ loading ? 'Memproses...' : 'Proses Pembayaran' }}
+                                            <i v-else class="material-symbols-rounded align-middle me-2">credit_card</i>
+                                            
+                                            <span class="align-middle font-weight-bold">
+                                                {{ loading ? 'Memproses...' : 'Proses Pembayaran' }}
+                                            </span>
                                         </button>
+                                        
                                     </div>
                                 </div>
                             </form>

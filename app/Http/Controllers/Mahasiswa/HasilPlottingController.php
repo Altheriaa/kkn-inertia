@@ -36,6 +36,7 @@ class HasilPlottingController extends Controller
         }
 
         return Inertia::render('Mahasiswa/Plotting/Index', [
+            'title' => 'Penempatan',
             'kelompok' => $kelompok,
             'mahasiswa' => $mahasiswa,
             'pendaftaranKkn' => $pendaftaranKkn,
@@ -48,6 +49,7 @@ class HasilPlottingController extends Controller
         if (!$mahasiswaSession) {
             return redirect()->route('login')->withErrors('Sesi habis, silakan login kembali.');
         }
+
         $pendaftaran = PendaftaranKkn::findOrFail($id);
 
         if ($pendaftaran->mahasiswa_id != $mahasiswaSession['id']) {
@@ -73,5 +75,42 @@ class HasilPlottingController extends Controller
         $pdf->setPaper('A4', 'landscape');
 
         return $pdf->stream('Laporan-Plotting-' . $kelompok->nama_kelompok . '.pdf');
+    }
+
+    public function detail($id)
+    {
+        $mahasiswaSession = Session::get('mahasiswa_data');
+
+        if (!$mahasiswaSession) {
+            return redirect()->route('login')->withErrors('Sesi habis.');
+        }
+        // Ambil mahasiswa lokal
+        $mahasiswa = Mahasiswa::find($mahasiswaSession['id']);
+
+        $pendaftaran = PendaftaranKkn::findOrFail($id);
+
+        // VALIDASI KEAMANAN: Cek apakah mahasiswa ini anggota kelompok tersebut
+        $isAnggota = PendaftaranKkn::where('mahasiswa_id', $mahasiswa->id)
+            ->where('kelompok_kkn_id', $pendaftaran->kelompok_kkn_id)
+            ->exists();
+
+        if (!$isAnggota) {
+            return redirect()->route('mahasiswa.plotting')->with('error', 'Anda tidak memiliki akses untuk melihat detail kelompok ini.');
+        }
+
+        $kelompok = KelompokKkn::with(['dosenDpl', 'lokasiKkn', 'jadwalKkn'])->findOrFail($pendaftaran->kelompok_kkn_id);
+
+        $anggota = PendaftaranKkn::with('mahasiswa')
+            ->where('kelompok_kkn_id', $kelompok->id)
+            ->get();
+
+        $pendaftaranKkn = PendaftaranKkn::where('kelompok_kkn_id', $kelompok->id)->count();
+
+        return Inertia::render('Mahasiswa/Plotting/DetailAnggota', [
+            'title' => 'Penempatan / Detail Kelompok',
+            'kelompok' => $kelompok,
+            'pendaftaranKkn' => $pendaftaranKkn,
+            'anggota' => $anggota,
+        ]);
     }
 }

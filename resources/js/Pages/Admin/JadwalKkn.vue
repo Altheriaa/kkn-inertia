@@ -132,10 +132,6 @@ const formatDate = (dateStr) => {
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-4">
                                                 <i class="material-symbols-rounded text-xs me-1 align-middle">badge</i>
-                                                Nama Periode
-                                            </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                <i class="material-symbols-rounded text-xs me-1 align-middle">school</i>
                                                 Tahun / Semester
                                             </th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -170,13 +166,8 @@ const formatDate = (dateStr) => {
                                                 <div class="d-flex px-3 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm font-weight-bold">{{ jadwalkkn.nama_periode }}</h6>
-                                                        <p class="text-xs text-secondary mb-0">ID Siakad: {{ jadwalkkn.id_siakad }}</p>
                                                     </div>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{ jadwalkkn.tahun_ajaran }}</p>
-                                                <p class="text-xs text-secondary mb-0">{{ jadwalkkn.semester }}</p>
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0">

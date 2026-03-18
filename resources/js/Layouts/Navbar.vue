@@ -1,5 +1,16 @@
 <script setup>
     import { Link } from '@inertiajs/vue3';
+
+    const toggleSidenav = () => {
+        const body = document.getElementsByTagName('body')[0];
+        const className = 'g-sidenav-pinned';
+
+        if (body.classList.contains(className)) {
+            body.classList.remove(className);
+        } else {
+            body.classList.add(className);
+        }
+    };
 </script>
 
 <template>
@@ -69,7 +80,7 @@
                 </div>
                 <ul class="navbar-nav d-flex align-items-center  justify-content-end">
                     <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav" @click="toggleSidenav">
                             <div class="sidenav-toggler-inner">
                                 <i class="sidenav-toggler-line"></i>
                                 <i class="sidenav-toggler-line"></i>

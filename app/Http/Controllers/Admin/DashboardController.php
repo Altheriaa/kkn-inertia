@@ -46,6 +46,7 @@ class DashboardController extends Controller
         $totalAktif = collect($jenisKknList)->where('is_active', true)->count();
 
         return Inertia::render('Admin/Dashboard', [
+            'title' => 'Dashboard',
             'jadwal_kkn' => $jadwal_kkn,
             'jadwal_kkn_dash' => $jadwal_kkn_dash,
             'jenisKknList' => $jenisKknList,

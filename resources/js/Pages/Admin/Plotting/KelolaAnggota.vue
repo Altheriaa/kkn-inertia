@@ -1,6 +1,6 @@
 <script setup>
 import Layout from '../../../Layouts/App.vue';
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { Link, router, usePage, useForm } from '@inertiajs/vue3';
 import { ref, computed, watch, onMounted } from 'vue';
 import Swal from 'sweetalert2';
 
@@ -9,6 +9,41 @@ const props = defineProps({
     kandidat: Array,
     anggota: Array,
 });
+
+const anggotaTerdaftar = ref([...props.anggota]);
+
+const form = useForm({
+    anggota_ids: [],
+});
+
+// Submit sync anggota
+const confirmAdd = () => {
+    // Cek duplikat
+    const isExist = anggotaTerdaftar.value.some(a => a.mahasiswa_id === selectedKandidat.value.mahasiswa_id);
+    
+    if (isExist) {
+        Swal.fire('Info', 'Mahasiswa ini sudah ada di kelompok.', 'info');
+    } else if (anggotaTerdaftar.value.length >= 10) {
+        Swal.fire('Penuh', 'Maksimal anggota adalah 10 orang.', 'warning');
+    } else {
+        // Tambahkan ke array lokal (Kiri)
+        anggotaTerdaftar.value.push(selectedKandidat.value);
+        closeModal();
+    }
+};
+
+const kickAnggota = (index) => {
+    anggotaTerdaftar.value.splice(index, 1);
+};
+
+const submitSync = () => {
+    // Map ID dari pendaftaran_kkn
+    form.anggota_ids = anggotaTerdaftar.value.map(item => item.id);
+
+    form.put(`/admin/plotting/${props.kelompok.id}/sync-anggota`, {
+        onSuccess: () => Swal.fire('Berhasil', 'Data disimpan!', 'success'),
+    });
+};
 
 // Search 
 const searchQuery = ref(props.filters?.search || '');
@@ -95,101 +130,70 @@ const closeModal = () => {
 
             <!-- {{-- KOLOM KIRI: Anggota Terdaftar (FORM UTAMA) --}} -->
             <div class="col-lg-7 col-md-12 mb-4">
-
-                <!-- {{-- Pastikan route ini ada di web.php: Route::put('/plotting/{id}/sync', ...)->name('admin.plotting.sync')
-                --}} -->
-                <form action="{{ route('syncAnggota', $kelompok->id) }}" method="POST" id="formBatchUpdate">
-                    <div class="card h-100">
-                        <div class="card-header pb-0 p-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="mb-0">Anggota Terdaftar <span id="counter-anggota"
-                                        class="badge badge-sm bg-gradient-success border-0 ms-1 px-2 py-1">{{ anggota?.total || 0 }}
-                                        / 10</span>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0" id="table-anggota">
-                                    <thead>
-                                        <tr>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Mahasiswa</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Status Kendaraan</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <!-- <tbody>
-                                        @forelse($anggota as $item)
-                                            <tr data-id="{{ $item->id }}">
-                                                {{-- INPUT HIDDEN UTAMA (Ini yang dibaca Controller) --}}
-                                                {{-- Name harus 'anggota_ids[]' sesuai request controller --}}
-                                                <input type="hidden" name="anggota_ids[]" value="{{ $item->id }}">
-
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <div class="avatar avatar-sm me-3 bg-gradient-dark rounded-circle">
-                                                                <span
-                                                                    class="text-white text-xs font-weight-bold">{{ substr($item->mahasiswa->nama, 0, 2) }}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">{{ $item->mahasiswa->nama }}</h6>
-                                                            <p class="text-xs text-secondary mb-0">{{ $item->mahasiswa->nim }} •
-                                                                {{ $item->mahasiswa->prodi }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    @if($item->mahasiswa->punya_kendaraan === 'Punya')
-                                                        <span
-                                                            class="badge badge-sm badge-success-soft text-success border border-success">
-                                                            <i
-                                                                class="material-symbols-rounded text-xs align-middle me-1">two_wheeler</i>
-                                                            Ada
-                                                        </span>
-                                                    @else
-                                                        <span
-                                                            class="badge badge-sm badge-danger-soft text-danger border border-danger">
-                                                            <i
-                                                                class="material-symbols-rounded text-xs align-middle me-1">no_photography</i>
-                                                            Tidak Ada
-                                                        </span>
-                                                    @endif
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    {{-- Tombol KICK (Hanya hapus baris via JS, tidak reload) --}}
-                                                    <button type="button"
-                                                        class="btn btn-link text-danger text-gradient p-0 mb-0 btn-kick">
-                                                        <i class="material-symbols-rounded text-lg">delete</i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr id="empty-row">
-                                                <td colspan="3" class="text-center text-secondary text-sm py-4">Belum ada
-                                                    anggota.</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody> -->
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card-footer p-3 d-flex justify-content-end">
-                            <!-- {{-- Tombol Submit Form Utama --}} -->
-                            <button type="submit" class="btn bg-gradient-success mb-0" id="btn-save">
-                                <i class="material-symbols-rounded text-sm me-1">save</i> Simpan Perubahan
-                            </button>
+                <div class="card h-100">
+                    <div class="card-header pb-0 p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">Anggota Terdaftar 
+                                <span class="badge badge-sm bg-gradient-success ms-1">
+                                    {{ anggotaTerdaftar.length }} / 10
+                                </span>
+                            </h6>
                         </div>
                     </div>
-                </form>
+                    <div class="card-body p-3">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0" id="table-anggota">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Mahasiswa</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Status Kendaraan</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in anggotaTerdaftar" :key="item.id">
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="avatar avatar-sm me-3 bg-gradient-dark rounded-circle">
+                                                    <span class="text-white text-xs">{{ item.mahasiswa.nama.substring(0,2) }}</span>
+                                                </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ item.mahasiswa.nama }}</h6>
+                                                    <p class="text-xs text-secondary mb-0">{{ item.mahasiswa.nim }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span :class="item.mahasiswa.punya_kendaraan === 'Punya' ? 'text-success border-success' : 'text-danger border-danger'" class="badge badge-sm border">
+                                                {{ item.mahasiswa.punya_kendaraan === 'Punya' ? 'Ada' : 'Tidak' }}
+                                            </span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <button @click="kickAnggota(index)" type="button" class="btn btn-link text-danger p-0 mb-0">
+                                                <i class="material-symbols-rounded text-lg">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="anggotaTerdaftar.length === 0">
+                                        <td colspan="3" class="text-center text-secondary text-sm py-4">Belum ada anggota dipilih.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer p-3 d-flex justify-content-end">
+                        <!-- {{-- Tombol Submit Form Utama --}} -->
+                        <button @click="submitSync" :disabled="form.processing" class="btn bg-gradient-success mb-0" id="btn-save">
+                            <i class="material-symbols-rounded text-sm me-1">save</i> Simpan Perubahan
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- {{-- KOLOM KANAN: List Kandidat --}} -->
@@ -301,10 +305,10 @@ const closeModal = () => {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button @click="isModalOpen = false" class="btn bg-gradient-secondary">Batal</button>
-                    <!-- Type Button (Hanya trigger JS, bukan submit form modal) -->
-                    <button type="button" class="btn bg-gradient-primary" id="btn-confirm-add">Tambahkan ke
-                        Kelompok</button>
+                    <button @click="closeModal" class="btn bg-gradient-secondary">Batal</button>
+                    <button @click="confirmAdd" type="button" class="btn bg-gradient-primary">
+                        Tambahkan ke Kelompok
+                    </button>
                 </div>
             </div>
         </div>

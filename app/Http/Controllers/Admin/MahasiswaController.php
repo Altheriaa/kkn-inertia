@@ -31,6 +31,7 @@ class MahasiswaController extends Controller
             ->withQueryString();
 
         return Inertia::render('Admin/Mahasiswa/Index', [
+            'title' => 'Mahasiswa',
             'mahasiswas' => $mahasiswas,
             'filters' => [
                 'search' => $search,

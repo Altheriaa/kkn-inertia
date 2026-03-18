@@ -152,7 +152,7 @@ watch(() => page.props.flash, () => {
                         <div class="card-body pb-0 pt-3 px-4">
                             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                                 <!-- Filter Buttons -->
-                                <div class="d-flex gap-2 align-items-center">
+                                <div class="d-flex flex-wrap align-items-center gap-2">
                                     <span class="text-xs text-secondary font-weight-bold me-1">
                                         <i class="material-symbols-rounded text-xs align-middle">filter_list</i> Filter:
                                     </span>

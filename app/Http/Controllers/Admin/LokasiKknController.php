@@ -24,13 +24,16 @@ class LokasiKknController extends Controller
             ->withQueryString();
 
         return Inertia::render('Admin/LokasiKkn/Index', [
+            'title' => 'Lokasi KKN',
             'lokasiKkns' => $lokasiKkns,
             'filters' => ['search' => $search],
         ]);
     }
 
     public function create() {
-        return Inertia::render('Admin/LokasiKkn/Create');
+        return Inertia::render('Admin/LokasiKkn/Create', [
+            'title' => 'Lokasi KKN / Create',
+        ]);
     }
 
     public function store(Request $request)
@@ -53,6 +56,7 @@ class LokasiKknController extends Controller
         $lokasiKkn = LokasiKkn::findOrFail($id);
 
         return Inertia::render('Admin/LokasiKkn/Edit', [
+            'title' => 'Lokasi KKN / Edit',
             'lokasiKkn' => $lokasiKkn,
         ]);
     }
