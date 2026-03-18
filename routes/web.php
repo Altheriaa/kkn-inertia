@@ -17,11 +17,11 @@ use App\Http\Controllers\MidtransWebhookController;
 use App\Http\Controllers\Admin\PlottingController;
 use App\Http\Controllers\Mahasiswa\HasilPlottingController;
 use App\Http\Controllers\Admin\RekapitulasiMahasiswaController;
+use App\Http\Controllers\LandingPageController;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('landingPage');
-});
+// Landing
+Route::get('/', [LandingPageController::class, 'index']);
 
 // login mahasiswa
 Route::get('/login', [LoginController::class, 'index'])->name('login');

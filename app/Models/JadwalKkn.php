@@ -19,6 +19,25 @@ class JadwalKkn extends Model
         'is_active',
     ];
 
+    // Format Periode
+    public function getNamaPeriodeAttribute($value)
+    {
+        // $value adalah nilai asli dari database: "2025 1 - Ganjil"
+        if (!$value) return $value;
+
+        $parts = explode(' ', $value);
+        
+        if (count($parts) >= 4) {
+            $tahunMulai = (int) $parts[0]; // 2025
+            $tahunSelesai = $tahunMulai + 1; // 2026
+            $semester = $parts[3]; // Ganjil
+            
+            return "{$tahunMulai}/{$tahunSelesai} {$semester}";
+        }
+
+        return $value;
+    }
+
     public function kelompokKkn()
     {
         return $this->hasMany(KelompokKkn::class, 'jadwal_kkn_id');

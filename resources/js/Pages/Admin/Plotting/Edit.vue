@@ -85,7 +85,7 @@ const submit = () => {
                                         <div class="input-group input-group-outline" style="min-width: 150px;">
                                             <select class="form-control" v-model="form.jadwal_kkn_id">
                                                 <option value=""> Pilih Jadwal </option>
-                                                <option v-for="jadwal in jadwalKkns" :key="jadwal.id" :value="jadwal.id"> {{ jadwal.tahun_ajaran }} </option>
+                                                <option v-for="jadwal in jadwalKkns" :key="jadwal.id" :value="jadwal.id"> {{ jadwal.nama_periode }} </option>
                                             </select>
                                         </div>
                                     </div>
