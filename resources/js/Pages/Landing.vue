@@ -253,15 +253,15 @@ const isOpen = now >= props.jadwalKkn.tanggal_dibuka && now <= props.jadwalKkn.t
               <div class="card-body p-4">
                 <div class="d-flex align-items-center mb-3">
                   <i class="material-symbols-rounded me-2">event</i>
-                  <h5 class="mb-0 text-white">{{ jadwalKkn.nama_periode ?? 'Periode KKN' }}</h5>
+                  <h5 class="mb-0 text-white">{{ jadwalKkn?.nama_periode ?? 'Periode KKN' }}</h5>
                 </div>
                 <div class="mb-3">
                   <small class="opacity-8">Pendaftaran Dibuka</small>
-                  <p class="mb-0">{{ formatDate(jadwalKkn.tanggal_dibuka ?? '-') }}</p>
+                  <p class="mb-0">{{ formatDate(jadwalKkn?.tanggal_dibuka ?? '-') }}</p>
                 </div>
                 <div class="mb-3">
                   <small class="opacity-8">Pendaftaran Ditutup</small>
-                  <p class="mb-0">{{ formatDate(jadwalKkn.tanggal_ditutup ?? '-') }}</p>
+                  <p class="mb-0">{{ formatDate(jadwalKkn?.tanggal_ditutup ?? '-') }}</p>
                 </div>
                 <div>
                   <small class="opacity-8">Status</small>
