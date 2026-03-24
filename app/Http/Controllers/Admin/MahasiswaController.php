@@ -45,6 +45,7 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::findOrFail($id);
 
         return Inertia::render('Admin/Mahasiswa/Show', [
+            'title' => 'Detail Mahasiswa',
             'mahasiswa' => $mahasiswa
         ]);
     }
