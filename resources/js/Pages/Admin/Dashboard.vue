@@ -117,7 +117,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">Semester</p>
-                                    <h5 class="mb-0">{{ jadwal_kkn_dash.nama_periode || '-' }}</h5>
+                                    <h5 class="mb-0">{{ jadwal_kkn_dash?.nama_periode || '-' }}</h5>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -231,7 +231,7 @@
                                                 <div class="d-flex px-2 py-1 ps-3">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 v-if="jadwal_kkn" class="mb-0 text-sm">
-                                                            {{ jadwal_kkn.nama_periode }}
+                                                            {{ jadwal_kkn?.nama_periode }}
                                                         </h6>
                                                         <h6 v-else class="mb-0 text-sm">
                                                             Tidak Ada Jadwal
@@ -243,7 +243,7 @@
                                             <!-- {{-- Kolom Tanggal Dibuka (Ini sudah benar) --}} -->
                                             <td class="align-middle text-center text-sm">
                                                 <span v-if="jadwal_kkn" class="text-xs font-weight-bold">
-                                                    {{ formatDate(jadwal_kkn.tanggal_dibuka)  }}
+                                                    {{ formatDate(jadwal_kkn?.tanggal_dibuka)  }}
                                                 </span>
                                                 <span v-else class="text-xs font-weight-bold">
                                                     -
