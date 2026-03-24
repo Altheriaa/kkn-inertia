@@ -19,8 +19,13 @@ const formatDate = (dateStr) => {
     });
 };
 
-const now = new Date();
-const isOpen = now >= props.jadwalKkn.tanggal_dibuka && now <= props.jadwalKkn.tanggal_ditutup;
+const isOpen = computed(() => {
+    if (!props.jadwalKkn) return false;
+    const now = new Date();
+    const start = new Date(props.jadwalKkn.tanggal_dibuka);
+    const end = new Date(props.jadwalKkn.tanggal_ditutup);
+    return now >= start && now <= end;
+});
 
 </script>
 
@@ -110,7 +115,7 @@ const isOpen = now >= props.jadwalKkn.tanggal_dibuka && now <= props.jadwalKkn.t
             </div>
             <div class="col-9">
               <div class="card text-center p-4 shadow">
-                <h2 class="text-dark fw-bold mb-2">{{ jadwalKkn.nama_periode }}</h2>
+                <h2 class="text-dark fw-bold mb-2">{{ jadwalKkn?.nama_periode ?? 'Tidak Ada Periode Aktif' }}</h2>
                 <p class="text-secondary mb-0">Periode KKN</p>
               </div>
             </div>
@@ -270,8 +275,11 @@ const isOpen = now >= props.jadwalKkn.tanggal_dibuka && now <= props.jadwalKkn.t
                 <div>
                   <small class="opacity-8">Status</small>
                   <p class="mb-0">
-                      <span v-if="!isOpen" class="badge bg-success">Pendaftaran Dibuka</span>
-                      <span v-else class="badge bg-secondary">Pendaftaran Ditutup</span>
+                      <template v-if="jadwalKkn">
+                          <span v-if="isOpen" class="badge bg-success">Pendaftaran Dibuka</span>
+                          <span v-else class="badge bg-secondary">Pendaftaran Ditutup</span>
+                      </template>
+                      <span v-else class="badge bg-secondary">Pendaftaran Belum Tersedia</span>
                   </p>
                 </div>
               </div>
