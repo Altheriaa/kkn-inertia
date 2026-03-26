@@ -53,6 +53,10 @@ class PembayaranController extends Controller
             !$mahasiswa->no_hp_wali ||
             !$mahasiswa->jenis_kelamin ||
             !$mahasiswa->ukuran_jacket_rompi ||
+            !$mahasiswa->punya_kendaraan ||
+            !$mahasiswa->tipe_kendaraan ||
+            !$mahasiswa->punya_lisensi ||
+            !$mahasiswa->foto_ktp ||
             !$mahasiswa->keahlian
         ) {
             return redirect('/mahasiswa/pendaftaran')

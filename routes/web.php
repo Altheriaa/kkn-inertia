@@ -109,7 +109,6 @@ Route::middleware(['auth.mahasiswa'])->prefix('mahasiswa')->group(function () {
     // Cetak Laporan Kelompok
     Route::get('/plotting/{id}/cetak-kelompok', [HasilPlottingController::class, 'cetakLaporanKelompok']);
     
-    
     // Profile Route
     Route::get('/profile', [ProfileController::class, 'index']);
 });

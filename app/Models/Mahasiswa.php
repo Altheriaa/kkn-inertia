@@ -26,7 +26,8 @@ class Mahasiswa extends Model
         'tipe_kendaraan',
         'punya_lisensi',
         'keahlian',
-        'status_kkn'
+        'status_kkn',
+        'foto_ktp'
     ];
 
     // Satu mahasiswa cuma bisa punya satu payment

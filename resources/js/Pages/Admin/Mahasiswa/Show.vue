@@ -1,7 +1,7 @@
 <script setup>
 import Layout from '../../../Layouts/App.vue';
 import { Link } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, watch, onMounted, ref } from 'vue';
 
 const props = defineProps({
     mahasiswa: Object
@@ -23,6 +23,23 @@ const genderIcon = computed(() => {
     if (props.mahasiswa.jenis_kelamin === 'P') return 'female';
     return 'help';
 });
+
+const previewUrl = ref(props.mahasiswa.foto_ktp ? `/storage/${props.mahasiswa.foto_ktp}` : null);
+
+// Modal ktp
+const isModalOpen = ref(false);
+const selectedKandidat = ref(null);
+
+// Fungsi pemicu saat tombol + diklik
+const openAddModal = (kandidat) => {
+    selectedKandidat.value = kandidat;
+    isModalOpen.value = true;
+};
+
+const closeModal = () => {
+    isModalOpen.value = false;
+    selectedKandidat.value = null;
+};
 </script>
 
 <template>
@@ -209,8 +226,44 @@ const genderIcon = computed(() => {
                                         </div>
                                         <div class="ms-4 text-dark">{{ mahasiswa.keahlian || '-' }}</div>
                                     </div>
+
+                                    <div class="list-group-item px-4 py-3 border-0 bg-light">
+                                        <div class="d-flex align-items-center mb-1">
+                                            <i class="material-symbols-rounded text-dark text-sm me-2">id_card</i>
+                                            <small class="text-muted text-uppercase fw-bold">Kartu Tanda Penduduk</small>
+                                        </div>
+                                        <div class="ms-4 text-dark">
+                                            <button class="btn btn-sm btn-outline-dark mb-0 mt-2" @click="openAddModal(k)">
+                                                <i class="material-symbols-rounded text-sm me-1">visibility</i>Lihat Kartu Tanda Penduduk
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal KTP -->
+         <div v-if="isModalOpen" class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block; background: rgba(0,0,0,0.5);">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-normal">Kartu Identitas {{ mahasiswa.nama }}</h5>
+                        <button type="button" class="btn-close text-dark" @click="isModalOpen = false" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div v-if="previewUrl" class="text-center">
+                            <img :src="previewUrl" class="img-fluid rounded-3 w-100 p-3" style="max-height: 190px; object-fit: contain; background: #f8f9fa;">
+                            <a :href="previewUrl" target="_blank" class="btn btn-primary mt-4">Unduh Foto</a>
+                        </div>
+                        <div v-else class="text-center mt-2 mb-3">
+                            <p class="text-muted">Tidak ada foto KTP</p>
                         </div>
                     </div>
                 </div>

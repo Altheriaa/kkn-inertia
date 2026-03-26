@@ -62,6 +62,8 @@ class PendaftaranController extends Controller
             'tipe_kendaraan' => 'nullable|in:Tidak Ada,Mobil,Sepeda Motor',
             'punya_lisensi' => 'nullable|in:Tidak Ada,SIM A,SIM B,SIM C,Lainnya',
             'keahlian' => 'nullable|string|max:255',
+            'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'remove_foto_ktp' => 'nullable'
         ]);
 
         $mahasiswaSession = Session::get('mahasiswa_data');
@@ -70,10 +72,19 @@ class PendaftaranController extends Controller
             return redirect()->route('login')->withErrors('Sesi habis.');
         }
 
+        // upload file
+        if ($request->hasFile('foto_ktp')) {
+            $validated['foto_ktp'] = $request->file('foto_ktp')->store('foto_ktp', 'public');
+        } elseif ($request->boolean('remove_foto_ktp')) {
+            $validated['foto_ktp'] = null;
+        } else {
+            unset($validated['foto_ktp']);
+        }
+
         // Update mahasiswa
         $mahasiswa = Mahasiswa::find($mahasiswaSession['id']);
         $mahasiswa->update($validated);
 
-        return back()->with('success', 'Biodata berhasil diperbarui.');
+        return back()->with('success', 'Data berhasil disimpan.');
     }
 }
