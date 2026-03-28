@@ -73,9 +73,21 @@ const isOpen = computed(() => {
               </ul>
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <Link href="/login" class="btn btn-sm bg-gradient-dark mb-0">
-                    <i class="material-symbols-rounded me-1">login</i> Login
-                  </Link>
+                  <template v-if="$page.props.auth.user && $page.props.auth.user.email === 'operatorkkn@abulyatama.ac.id'">
+                    <Link href="/admin/dashboard" class="btn btn-sm bg-gradient-dark mb-0">
+                      <i class="material-symbols-rounded me-1">dashboard</i> Dashboard
+                    </Link>
+                  </template>
+                  <template v-else-if="$page.props.authMahasiswa.user">
+                    <Link href="/mahasiswa/dashboard" class="btn btn-sm bg-gradient-dark mb-0">
+                      <i class="material-symbols-rounded me-1">dashboard</i> Dashboard
+                    </Link>
+                  </template>
+                  <template v-else>
+                    <Link href="/login" class="btn btn-sm bg-gradient-dark mb-0">
+                      <i class="material-symbols-rounded me-1">login</i> Login
+                    </Link>
+                  </template>
                 </li>
               </ul>
             </div>
