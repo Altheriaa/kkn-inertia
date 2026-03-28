@@ -122,7 +122,7 @@ const paginationPages = computed(() => {
                                     <!-- Filter Jadwal -->
                                     <div class="input-group input-group-outline" style="min-width: 150px;">
                                         <select class="form-control" v-model="statusJadwal">
-                                            <option value="">Semua Jadwal</option>
+                                            <!-- <option value="">Semua Jadwal</option> -->
                                             <option v-for="jadwal in listJadwal" :key="jadwal.id" :value="jadwal.id">
                                                 {{ jadwal.nama_periode }}
                                             </option>

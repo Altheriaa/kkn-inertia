@@ -102,7 +102,7 @@ const closeModal = () => {
                                 <p class="text-sm mb-0 text-capitalize text-white opacity-7">Nama Kelompok</p>
                                 <h4 class="mb-0 text-white">{{ kelompok.nama_kelompok }}</h4>
                                 <span
-                                    class="badge badge-sm bg-gradient-primary border-0 mt-2 text-white">{{ kelompok.jadwal_kkn.tahun_ajaran }}</span>
+                                    class="badge badge-sm bg-gradient-primary border-0 mt-2 text-white">{{ kelompok.jadwal_kkn.nama_periode }}</span>
                                 |
                                 <span
                                     class="badge badge-sm bg-gradient-secondary border-0 mt-2 text-white">{{ kelompok.jenis_kkn }}</span>
