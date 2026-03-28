@@ -11,6 +11,13 @@ use Inertia\Inertia;
 class LoginController extends Controller
 {
     public function index() {
+
+        $hasSession = Session::get('mahasiswa_data');
+
+        if ($hasSession) {
+            return redirect()->route('mahasiswa.dashboard');
+        }
+
         return Inertia::render('Login/Mahasiswa');
     }
 
