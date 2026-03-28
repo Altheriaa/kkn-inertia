@@ -222,7 +222,7 @@ watch(() => page.props.flash, () => {
                                     <tbody>
                                         <!-- Empty State -->
                                         <tr v-if="!dosenDpls || !dosenDpls.data || dosenDpls.data.length === 0">
-                                            <td colspan="6" class="text-center py-5">
+                                            <td colspan="7" class="text-center py-5">
                                                 <div class="d-flex flex-column align-items-center">
                                                     <i class="material-symbols-rounded opacity-3 mb-2" style="font-size: 64px;">group_off</i>
                                                     <h6 class="text-secondary mb-1">Belum Ada Data</h6>
