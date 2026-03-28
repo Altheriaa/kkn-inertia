@@ -10,7 +10,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post('/admin/lokasi-kkn/', {
+    form.post('/admin/lokasi-kkn', {
         preserveScroll: true,
     });
 };

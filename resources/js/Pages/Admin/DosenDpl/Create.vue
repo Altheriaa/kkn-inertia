@@ -12,7 +12,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post('/admin/dosen-dpl/', {
+    form.post('/admin/dosen-dpl', {
         preserveScroll: true,
     });
 };

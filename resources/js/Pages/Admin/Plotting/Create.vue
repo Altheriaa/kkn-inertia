@@ -35,7 +35,7 @@ watch(() => form.jadwal_kkn_id,  (newId) => {
 });
 
 const submit = () => {
-    form.post('/admin/plotting/', {
+    form.post('/admin/plotting', {
         preserveScroll: true,
     });
 };
