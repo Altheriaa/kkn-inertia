@@ -6,7 +6,9 @@ use Midtrans\Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Payment;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PendaftaranKkn;
+use Illuminate\Support\Facades\Storage;
 
 class MidtransWebhookController extends Controller
 {
@@ -36,28 +38,26 @@ class MidtransWebhookController extends Controller
 
         Log::info("Webhook data parsed", $data);
 
-        // Validasi signature
+        // Validasi signature Key ?? cocok apa ga
         $expectedSignature = hash('sha512', $order_id . $status_code . $gross_amount . Config::$serverKey);
 
         if ($signature_key !== $expectedSignature) {
-            Log::warning("❌ Signature tidak valid!", [
-                'expected' => $expectedSignature,
-                'received' => $signature_key
-            ]);
+            // Log::warning("❌ Signature tidak valid!", [
+            //     'expected' => $expectedSignature,
+            //     'received' => $signature_key
+            // ]);
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
-        Log::info("✅ Signature valid");
+        Log::info("Signature Key Valid");
 
-        // Cari payment berdasarkan order ID
         $payment = Payment::where('order_id', $order_id)->first();
 
         if (!$payment) {
-            Log::error("Order tidak ditemukan", ['order_id' => $order_id]);
+            // Log::error("Order tidak ditemukan", ['order_id' => $order_id]);
             return response()->json(['message' => 'Payment not found'], 404);
         }
 
-        // Cari pendaftaran
         $pendaftaran = PendaftaranKkn::where('payment_id', $payment->id)->first();
 
         Log::info("Payment ditemukan", [
@@ -65,8 +65,14 @@ class MidtransWebhookController extends Controller
             'status' => $payment->status
         ]);
 
-        // Jika sudah final, jangan update lagi
+        // kalo dah oke, jangan update apapun lagi
         if (in_array($payment->status, ['success', 'failed'])) {
+            $namaMahasiswa = $payment->mahasiswa->nama;
+            $namaKkn = $payment->jenis_kkn;
+            $message = "Halo $namaMahasiswa! Pembayaran $namaKkn Anda dengan Order ID $order_id telah berhasil dibatalkan.";
+            // notif wa batal
+            $this->sendWhatsAppNotification($payment->mahasiswa->no_hp, $message);
+
             Log::info("Status final — tidak diupdate");
             return response()->json(['message' => 'Already processed'], 200);
         }
@@ -75,37 +81,49 @@ class MidtransWebhookController extends Controller
         if ($transaction_status == 'capture' || $transaction_status == 'settlement') {
             if ($fraud_status == 'accept') {
 
-                // UPDATE PAYMENT
+                // Update Payment
                 $payment->status = 'success';
                 $payment->save();
 
-                // UPDATE PENDAFTARAN
+                // Update Pendaftaran
                 if ($pendaftaran) {
                     $pendaftaran->status_pendaftaran = 'valid';
                     $pendaftaran->save();
                 }
 
-                // UPDATE MAHASISWA
+                // Update Mahasiswa
                 if ($payment->mahasiswa) {
                     $payment->mahasiswa->status_kkn = 'Sudah Daftar';
                     $payment->mahasiswa->save();
+
+                    $pdfUrl = $this->cetakTransaksi($order_id);
+
+                    $namaMahasiswa = $payment->mahasiswa->nama;
+                    $namaKkn = $payment->jenis_kkn;
+                    $message = "Halo $namaMahasiswa! Pembayaran $namaKkn Anda dengan Order ID $order_id telah berhasil.";
+                    if ($pdfUrl) {
+                        $message .= "\n\nBerikut invoice pembayaran Anda:\n$pdfUrl";
+                    }
+
+                    $this->sendWhatsAppNotification($payment->mahasiswa->no_hp, $message);
                 }
 
-                Log::info("✅ PEMBAYARAN BERHASIL", ['order_id' => $order_id]);
+                Log::info("PEMBAYARAN BERHASIL", ['order_id' => $order_id]);
             }
         } elseif (in_array($transaction_status, ['cancel', 'deny', 'expire'])) {
 
-            // PAYMENT GAGAL
+            // Pembayaran Gagal 
             $payment->status = 'failed';
             $payment->save();
 
-            // PENDAFTARAN GAGAL
+            // Pendaftaran Gagal
             if ($pendaftaran) {
                 $pendaftaran->status_pendaftaran = 'failed';
                 $pendaftaran->save();
             }
 
-            Log::info("❌ PEMBAYARAN GAGAL/EXPIRE", ['order_id' => $order_id]);
+            Log::info("PEMBAYARAN GAGAL/EXPIRE", ['order_id' => $order_id]);
+
         } elseif ($transaction_status == 'pending') {
 
             // PAYMENT MENUNGGU
@@ -117,7 +135,15 @@ class MidtransWebhookController extends Controller
                 $pendaftaran->save();
             }
 
-            Log::info("⏳ PEMBAYARAN PENDING", ['order_id' => $order_id]);
+            if ($payment->mahasiswa) {
+                $namaMahasiswa = $payment->mahasiswa->nama;
+                $namaKkn = $payment->jenis_kkn;
+                $message = "Halo $namaMahasiswa! Pembayaran $namaKkn Anda dengan Order ID $order_id masih dalam status pending. \n \nMohon segera selesaikan pembayaran KKN Anda!";
+
+                $this->sendWhatsAppNotification($payment->mahasiswa->no_hp, $message);
+            }
+
+            Log::info("PEMBAYARAN PENDING", ['order_id' => $order_id]);
         }
 
         Log::info("=== WEBHOOK SELESAI ===", [
@@ -127,4 +153,78 @@ class MidtransWebhookController extends Controller
 
         return response()->json(['message' => 'OK'], 200);
     }
+
+    // Fonte Controller 
+    protected function sendWhatsAppNotification($target, $message)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => ltrim($target, '0'),
+                'message' => $message,
+                'schedule' => 0,
+                'typing' => false,
+                'delay' => '2',
+                'countryCode' => '62',
+                'followup' => 0,
+                'inboxid' => 0,
+                'duration' => 1,
+            ),
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: " . env('FONNTE_TOKEN')
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            Log::error('Fonnte cURL error: ' . curl_error($curl));
+        }
+        curl_close($curl);
+
+        Log::info('Fonnte response', ['response' => $response]);
+
+        return $response;
+    }
+
+    public function cetakTransaksi($orderId)
+    {
+        $payment = Payment::with('mahasiswa')
+            ->where('order_id', $orderId)
+            ->where('status', 'success') 
+            ->first();
+
+        if (!$payment) {
+            Log::warning('cetakTransaksi: Payment not found', ['order_id' => $orderId]);
+            return null;
+        }
+        return url('/invoice/' . $orderId);
+    }
+
+    // Download Untuk Route URL Publik
+    public function downloadInvoice($orderId)
+    {
+        $payment = Payment::with('mahasiswa')
+            ->where('order_id', $orderId)
+            ->where('status', 'success')
+            ->first();
+
+        if (!$payment) {
+            abort(404, 'Invoice tidak ditemukan.');
+        }
+
+        $data = ['payment' => $payment];
+        $pdf = Pdf::loadView('pdf.Mahasiswa.Invoice', $data);
+
+        return $pdf->stream('Invoice-' . $payment->order_id . '.pdf');
+    }
+
 }

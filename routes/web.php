@@ -33,8 +33,12 @@ Route::get('/login-admin', [LoginAdminController::class, 'index'])->name('login.
 Route::post('/auth/login/admin', [LoginAdminController::class, 'login'])->name('login.admin.post');
 Route::get('/logout/admin', [LoginAdminController::class, 'logout'])->name('logout.admin');
 
-// Midtrans handler notification
+// Midtrans Notif
 Route::post('/midtrans/notification', [MidtransWebhookController::class, 'handle']);
+Route::get('/wa-notif', [MidtransWebhookController::class, 'waNotif']); // TEST ONLY
+
+// Public Invoice (tanpa auth, untuk link WA)
+Route::get('/invoice/{orderId}', [MidtransWebhookController::class, 'downloadInvoice'])->name('invoice.download');
 
 // Admin Routing
 Route::middleware(['auth'])->prefix('admin')->group(function () {
