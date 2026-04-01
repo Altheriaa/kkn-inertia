@@ -137,7 +137,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">Program Studi</p>
-                                    <h4 class="mb-0">{{ mahasiswaSession?.prodi?.nama_prodi || '-' }}</h4>
+                                    <h5 class="mb-0">{{ mahasiswaSession?.prodi?.nama_prodi || '-' }}</h5>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
