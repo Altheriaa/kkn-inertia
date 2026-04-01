@@ -25,7 +25,7 @@ class DosenDplController extends Controller
             ->withQueryString();
 
         return Inertia::render('Admin/DosenDpl/Index', [
-            'title' => 'Dosen Pembimbing Lapangann',
+            'title' => 'DPL',
             'dosenDpls' => $dosenDpls,
             'filters' => ['search' => $search],
         ]);
@@ -33,7 +33,7 @@ class DosenDplController extends Controller
 
     public function create() {
         return Inertia::render('Admin/DosenDpl/Create', [
-            'title' => 'Dosen Pembimbing Lapangann / Create',
+            'title' => 'DPL / Create',
         ]);
     }
 
@@ -55,7 +55,7 @@ class DosenDplController extends Controller
         $dosenDpl = DosenDpl::findOrFail($id);
 
         return Inertia::render('Admin/DosenDpl/Edit', [
-            'title' => 'Dosen Pembimbing Lapangann / Edit',
+            'title' => 'DPL / Edit',
             'dosenDpl' => $dosenDpl
         ]);
     }
