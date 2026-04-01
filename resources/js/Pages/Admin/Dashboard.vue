@@ -116,8 +116,9 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="text-sm mb-0 text-capitalize">Semester</p>
-                                    <h5 class="mb-0">{{ jadwal_kkn_dash?.nama_periode || '-' }}</h5>
+                                    <span class="text-sm mb-0 text-capitalize">Semester</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ jadwal_kkn_dash?.nama_periode || '-' }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -136,8 +137,9 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="text-sm mb-0 text-capitalize">Jumlah Mahasiswa</p>
-                                    <h5 class="mb-0">{{ mahasiswaCount }}</h5>
+                                    <span class="text-sm mb-0 text-capitalize">Jumlah Mahasiswa</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ mahasiswaCount }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -156,8 +158,9 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="text-sm mb-0 text-capitalize">KKN Aktif</p>
-                                    <h5 class="mb-0">{{ totalAktif }}</h5>
+                                    <span class="text-sm mb-0 text-capitalize">KKN Aktif</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ totalAktif }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -176,8 +179,9 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="text-sm mb-0 text-capitalize">Jumlah Transaksi</p>
-                                    <h5 class="mb-0">{{ transaksiCount }}</h5>
+                                    <span class="text-sm mb-0 text-capitalize">Jumlah Transaksi</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ transaksiCount }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">

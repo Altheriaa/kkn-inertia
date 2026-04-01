@@ -96,8 +96,9 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="text-sm mb-0 text-capitalize">Nama</p>
-                                    <h5 class="mb-0">{{ mahasiswaSession?.name || '-' }}</h5>
+                                    <span class="text-sm mb-0 text-capitalize">Nama</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ mahasiswaSession?.name || '-' }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -116,8 +117,9 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="text-sm mb-0 text-capitalize">NIM</p>
-                                    <h5 class="mb-0">{{ mahasiswaSession?.nim || '-' }}</h5>
+                                    <span class="text-sm mb-0 text-capitalize">NIM</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ mahasiswaSession?.nim || '-' }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -136,8 +138,9 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="text-sm mb-0 text-capitalize">Program Studi</p>
-                                    <h5 class="mb-0">{{ mahasiswaSession?.prodi?.nama_prodi || '-' }}</h5>
+                                    <span class="text-sm mb-0 text-capitalize">Program Studi</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ mahasiswaSession?.prodi?.nama_prodi || '-' }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -156,8 +159,9 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="text-sm mb-0 text-capitalize">Jumlah SKS</p>
-                                    <h5 class="mb-0">{{ mahasiswaSession?.jumlah_sks || '-' }}</h5>
+                                    <span class="text-sm mb-0 text-capitalize">Jumlah SKS</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ mahasiswaSession?.jumlah_sks || '-' }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
