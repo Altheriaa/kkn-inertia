@@ -117,7 +117,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">NIM</p>
-                                    <h4 class="mb-0">{{ mahasiswaSession?.nim || '-' }}</h4>
+                                    <h5 class="mb-0">{{ mahasiswaSession?.nim || '-' }}</h5>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -157,7 +157,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">Jumlah SKS</p>
-                                    <h4 class="mb-0">{{ mahasiswaSession?.jumlah_sks || '-' }}</h4>
+                                    <h5 class="mb-0">{{ mahasiswaSession?.jumlah_sks || '-' }}</h5>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">

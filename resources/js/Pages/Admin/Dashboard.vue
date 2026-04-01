@@ -137,7 +137,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">Jumlah Mahasiswa</p>
-                                    <h4 class="mb-0">{{ mahasiswaCount }}</h4>
+                                    <h5 class="mb-0">{{ mahasiswaCount }}</h5>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -157,7 +157,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">KKN Aktif</p>
-                                    <h4 class="mb-0">{{ totalAktif }}</h4>
+                                    <h5 class="mb-0">{{ totalAktif }}</h5>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
@@ -177,7 +177,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="text-sm mb-0 text-capitalize">Jumlah Transaksi</p>
-                                    <h4 class="mb-0">{{ transaksiCount }}</h4>
+                                    <h5 class="mb-0">{{ transaksiCount }}</h5>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
