@@ -17,8 +17,6 @@ class MidtransWebhookController extends Controller
         Config::$serverKey = config('midtrans.server_key');
         Config::$isProduction = config('midtrans.is_production');
 
-        Log::info('=== MIDTRANS WEBHOOK MASUK ===');
-
         // Payload mentah
         $payload = $request->getContent();
         $data = json_decode($payload, true);
@@ -36,16 +34,10 @@ class MidtransWebhookController extends Controller
         $fraud_status = $data['fraud_status'] ?? 'accept';
         $signature_key = $data['signature_key'] ?? null;
 
-        Log::info("Webhook data parsed", $data);
-
         // Validasi signature Key ?? cocok apa ga
         $expectedSignature = hash('sha512', $order_id . $status_code . $gross_amount . Config::$serverKey);
 
         if ($signature_key !== $expectedSignature) {
-            // Log::warning("❌ Signature tidak valid!", [
-            //     'expected' => $expectedSignature,
-            //     'received' => $signature_key
-            // ]);
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
@@ -77,7 +69,6 @@ class MidtransWebhookController extends Controller
             return response()->json(['message' => 'Already processed'], 200);
         }
 
-        // logic status midtrans
         if ($transaction_status == 'capture' || $transaction_status == 'settlement') {
             if ($fraud_status == 'accept') {
 
@@ -138,18 +129,14 @@ class MidtransWebhookController extends Controller
             if ($payment->mahasiswa) {
                 $namaMahasiswa = $payment->mahasiswa->nama;
                 $namaKkn = $payment->jenis_kkn;
-                $message = "Halo $namaMahasiswa! Pembayaran $namaKkn Anda dengan Order ID $order_id masih dalam status pending. \n \nMohon segera selesaikan pembayaran KKN Anda!";
+                $message = "Halo $namaMahasiswa! Pembayaran $namaKkn Anda dengan Order ID $order_id masih dalam 
+                status pending. \n \nMohon segera selesaikan pembayaran KKN Anda!";
 
                 $this->sendWhatsAppNotification($payment->mahasiswa->no_hp, $message);
             }
 
             Log::info("PEMBAYARAN PENDING", ['order_id' => $order_id]);
         }
-
-        Log::info("=== WEBHOOK SELESAI ===", [
-            'payment_status' => $payment->status,
-            'pendaftaran_status' => $pendaftaran->status_pendaftaran ?? null
-        ]);
 
         return response()->json(['message' => 'OK'], 200);
     }

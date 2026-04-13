@@ -71,8 +71,5 @@ class JadwalKknController extends Controller
             return redirect()->back()->with('error', 'Gagal sinkronisasi jadwal KKN');
         }
 
-
-
-
-}
+    }
 }

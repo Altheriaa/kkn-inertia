@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <title>Invoice - {{ $payment->order_id }}</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/Unaya.png') }}">
     <style>
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
@@ -18,130 +17,154 @@
             padding: 20px;
         }
 
-        .header-table {
+        table {
             width: 100%;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            border-collapse: collapse;
         }
 
-        .logo {
-            width: 80px;
-            height: 80px;
-            /* Ganti dengan path logo Anda jika sudah di-hosting */
-            /* background-color: #eee; */
-            /* Hapus jika pakai img */
+        .header-top td {
+            vertical-align: top;
         }
 
-        .company-details {
-            text-align: right;
-            font-size: 12px;
-            color: #555;
-        }
-
-        .company-details h2 {
-            margin: 0;
-            font-size: 24px;
-            color: #000;
-        }
-
-        .title {
-            text-align: center;
-            font-size: 22px;
+        .company-name {
+            font-size: 20px;
             font-weight: bold;
-            margin-bottom: 25px;
-            text-transform: uppercase;
+            color: #0d6b38;
+            width: 60%;
+        }
+
+        .logo-container {
+            width: 40%;
+            text-align: right;
+        }
+
+        .logo-container img {
+            max-height: 40px;
+        }
+
+        .header-details {
+            margin-top: 20px;
+        }
+
+        .header-details td {
+            vertical-align: top;
+        }
+
+        .company-address {
+            width: 60%;
+            line-height: 1.5;
+        }
+
+        .bank-details {
+            width: 40%;
+            line-height: 1.5;
+        }
+
+        .invoice-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0d6b38;
+            margin: 40px 0;
             letter-spacing: 1px;
         }
 
-        .details-table {
-            width: 100%;
-            margin-bottom: 30px;
+        .customer-section {
+            margin-bottom: 20px;
         }
 
-        .details-table td {
-            padding: 8px;
+        .customer-details {
+            width: 50%;
             vertical-align: top;
-            font-size: 14px;
+            line-height: 1.5;
         }
 
-        .details-table .label {
-            font-weight: bold;
-            width: 30%;
-            color: #555;
-        }
-
-        .details-table .value {
-            width: 70%;
-        }
-
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .invoice-table th,
-        .invoice-table td {
-            border: 1px solid #ccc;
-            padding: 12px;
-            text-align: left;
-        }
-
-        .invoice-table th {
-            background-color: #f4f4f4;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 12px;
-        }
-
-        .total-section {
-            margin-top: 20px;
-            width: 100%;
+        .date-details {
+            width: 50%;
+            vertical-align: top;
             text-align: right;
         }
 
-        .total-table {
+        .date-table {
+            width: auto;
             float: right;
-            width: 40%;
         }
 
-        .total-table td {
-            padding: 8px;
-            font-size: 14px;
+        .date-table td {
+            text-align: left;
+            padding: 2px 10px;
+            font-size: 12px;
         }
 
-        .total-table .total-label {
+        .date-label {
             font-weight: bold;
-            background-color: #f4f4f4;
         }
 
-        .total-table .total-amount {
+        .table-items {
+            width: 100%;
+            margin-top: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table-items th {
+            background-color: #0d6b38;
+            color: white;
+            padding: 10px;
+            text-align: left;
             font-weight: bold;
-            font-size: 18px;
-            color: #000;
         }
 
-        .status-paid {
-            text-align: center;
+        .table-items td {
+            padding: 15px 10px;
+            vertical-align: top;
+        }
+
+        .align-right {
+            text-align: right !important;
+        }
+
+        .align-center {
+            text-align: center !important;
+        }
+
+        .totals {
             margin-top: 30px;
-            font-size: 24px;
+            width: 100%;
+        }
+
+        .totals-table {
+            width: 50%;
+            float: right;
+            border-collapse: collapse;
+        }
+
+        .totals-table td {
+            padding: 10px 10px;
+        }
+
+        .totals-table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        .totals-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .text-theme {
+            color: #0d6b38;
+        }
+
+        .total-row {
             font-weight: bold;
-            color: #28a745;
-            border: 3px solid #28a745;
-            padding: 15px;
-            display: inline-block;
-            transform: rotate(-5deg);
-            opacity: 0.7;
+            font-size: 16px;
         }
 
         .footer {
-            margin-top: 50px;
+            margin-top: 150px;
             text-align: center;
             font-size: 10px;
             color: #888;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
+            clear: both;
         }
     </style>
 </head>
@@ -149,83 +172,90 @@
 <body>
     <div class="container">
 
-        <table class="header-table">
+        <table class="header-top">
             <tr>
-                <td style="width: 20%; vertical-align: top;">
-                    {{-- Ganti dengan tag img jika logo Anda ada URL-nya --}}
-                    {{-- <img src="https://path.to/logo.png" alt="Logo" class="logo"> --}}
-
-                </td>
-                <td style="width: 80%; vertical-align: top;" class="company-details">
-                    <h2>Panitia KKN</h2>
-                    <p>Universitas Abulyatama</p>
-                    <p>Jalan Jl. Blangbintang Lama No.KM 8, RW.5, Lampoh Keude, Kec. Kuta Baro, Kabupaten Aceh Besar,
-                        Aceh 24415</p>
-                    <p>Email: kkn@unaya.ac.id | Web: unaya.ac.id</p>
+                <td class="company-name">Panitia Pelaksana KKN Universitas Abulyatama</td>
+                <td class="logo-container">
+                    <img src="{{ public_path('assets/img/Unaya.png') }}" alt="Logo">
                 </td>
             </tr>
         </table>
 
-        <div class="title">Bukti Pembayaran Lunas</div>
-
-        <table class="details-table">
+        <table class="header-details">
             <tr>
-                <td class="label">Diterbitkan untuk:</td>
-                <td class="value">
-                    <strong>{{ $payment->mahasiswa->nama }}</strong><br>
+                <td class="company-address">
+                    Jalan Jl. Blangbintang Lama No.KM 8,<br>
+                    RW.5, Lampoh Keude, Kec. Kuta Baro,<br>
+                    Kabupaten Aceh Besar, Aceh 24415<br>
+                    Telepon: -
+                </td>
+                <td class="bank-details">
+                    Email: kkn@unaya.ac.id<br>
+                    Web: kkn.unaya.ac.id
+                </td>
+            </tr>
+        </table>
+
+        <div class="invoice-title">
+            BUKTI PEMBAYARAN KKN<br>
+            <span style="font-size: 16px; color: #555;"># {{ $payment->order_id }}</span>
+        </div>
+
+        <table class="customer-section">
+            <tr>
+                <td class="customer-details">
+                    <strong style="font-size: 14px; text-transform: uppercase;">Data Mahasiswa</strong><br><br>
+                    <strong>{{ strtoupper($payment->mahasiswa->nama) }}</strong><br>
                     NIM: {{ $payment->mahasiswa->nim }}
                 </td>
-            </tr>
-            <tr>
-                <td class="label">Tanggal Pembayaran:</td>
-                <td class="value">{{ $payment->created_at->format('d F Y') }}</td>
-            </tr>
-            <tr>
-                <td class="label">Order ID:</td>
-                <td class="value">{{ $payment->order_id }}</td>
-            </tr>
-        </table>
-
-        <table class="invoice-table">
-            <thead>
-                <tr>
-                    <th>Deskripsi</th>
-                    <th>Jumlah</th>
-                    <th style="text-align: right;">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Pendaftaran {{ $payment->jenis_kkn }}</td>
-                    <td>1</td>
-                    <td style="text-align: right;">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="total-section">
-            <tr>
-                <td style="width: 60%;">
-                    @if($payment->status == 'success')
-                        <div class="status-paid">LUNAS</div>
-                    @endif
-                </td>
-                <td style="width: 40%;">
-                    <table class="total-table">
+                <td class="date-details">
+                    <table class="date-table">
                         <tr>
-                            <td class="total-label">Subtotal</td>
-                            <td style="text-align: right;">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                            <td class="date-label">TANGGAL BAYAR:</td>
+                            <td>{{ $payment->created_at->format('d/m/Y') }}</td>
                         </tr>
                         <tr>
-                            <td class="total-label">Total Dibayar</td>
-                            <td class="total-amount" style="text-align: right;">
-                                Rp {{ number_format($payment->amount, 0, ',', '.') }}
-                            </td>
+                            <td class="date-label">STATUS:</td>
+                            <td style="color: #0d6b38; font-weight: bold;">LUNAS</td>
                         </tr>
                     </table>
                 </td>
             </tr>
         </table>
+
+        <table class="table-items">
+            <thead>
+                <tr>
+                    <th style="text-align: left; width: 50%;">URAIAN PEMBAYARAN</th>
+                    <th style="text-align: center; width: 10%;">JUMLAH</th>
+                    <th style="text-align: right; width: 40%;">TOTAL BIAYA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Biaya Pendaftaran {{ $payment->jenis_kkn }}</td>
+                    <td class="align-center">1</td>
+                    <td class="align-right">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="totals">
+            <table class="totals-table">
+                <tr>
+                    <td class="text-theme">SUBTOTAL</td>
+                    <td class="align-right">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td class="text-theme">BIAYA ADMIN</td>
+                    <td class="align-right">Rp 0</td>
+                </tr>
+                <tr class="total-row">
+                    <td class="text-theme">TOTAL DIBAYAR</td>
+                    <td class="align-right">Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                </tr>
+            </table>
+        </div>
 
         <div class="footer">
             Ini adalah bukti pembayaran yang sah dan diterbitkan oleh sistem secara otomatis.

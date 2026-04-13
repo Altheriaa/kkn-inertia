@@ -53,7 +53,6 @@
         if (confirm.isConfirmed) {
             loading.value = true;
             try {
-                // panggil methode createTransaction controller 
                 const response = await axios.post('/mahasiswa/pembayaran/create-transaction', {
                     jenis_kkn_id: form.jenis_kkn_id
                 }); 
