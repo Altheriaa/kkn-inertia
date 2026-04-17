@@ -102,13 +102,13 @@ const closeModal = () => {
                                 <p class="text-sm mb-0 text-capitalize text-white opacity-7">Nama Kelompok</p>
                                 <h4 class="mb-0 text-white">{{ kelompok.nama_kelompok }}</h4>
                                 <span
-                                    class="badge badge-sm bg-gradient-primary border-0 mt-2 text-white">{{ kelompok.jadwal_kkn.nama_periode }}</span>
+                                    class="badge badge-sm bg-gradient-primary border-0 mt-2 text-white">{{ kelompok.jadwal_kkn?.nama_periode }}</span>
                                 |
                                 <span
                                     class="badge badge-sm bg-gradient-secondary border-0 mt-2 text-white">{{ kelompok.jenis_kkn }}</span>
                                 |
                                 <span class="font-weight-bold text-light"><i
-                                        class="material-symbols-rounded text-success text-gradient me-1 align-middle">location_on</i>{{ kelompok.lokasi_kkn.nama_desa }}</span>
+                                        class="material-symbols-rounded text-success text-gradient me-1 align-middle">location_on</i>{{ kelompok.lokasi_kkn?.nama_desa }}</span>
                             </div>
                             <div class="text-start text-md-end rounded-3 bg-gradient-secondary px-3 py-2">
                                 <p class="text-sm mb-0 text-capitalize text-white opacity-7 font-weight-bold">Dosen
@@ -117,7 +117,7 @@ const closeModal = () => {
                                     <i
                                         class="material-symbols-rounded text-success text-gradient me-1 align-middle">account_circle</i>
                                     <span
-                                        class="align-middle text-break">{{ kelompok.dosen_dpl.nama_dosen }}</span>
+                                        class="align-middle text-break">{{ kelompok.dosen_dpl?.nama_dosen }}</span>
                                 </h4>
                             </div>
                         </div>

@@ -23,3 +23,4 @@ class CheckMahasiswaSession
         return redirect()->route('login')->withErrors('Anda harus login terlebih dahulu.');
     }
 }
+    

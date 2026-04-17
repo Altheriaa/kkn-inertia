@@ -44,9 +44,8 @@ class PendaftaranController extends Controller
 
     public function store(Request $request)
     {
-        // validasi apakah mahasiswa udah daftar apa belum, kalo udah gabisa edit lagi
+        
         $mahasiswaId = Session::get('mahasiswa_data')['id'];
-        // 2. Cari mahasiswa itu di tabel lokal menggunakan ID-nya
         $mahasiswa = Mahasiswa::find($mahasiswaId);
 
         if ($mahasiswa->status_kkn === 'Sudah Daftar') {

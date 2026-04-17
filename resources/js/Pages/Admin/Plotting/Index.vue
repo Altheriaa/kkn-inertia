@@ -286,15 +286,15 @@ watch(() => page.props.flash, () => {
                                             <td>
                                                 <div class="d-flex px-3 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm font-weight-bold">{{ kelompok.jadwal_kkn.nama_periode }}</h6>
+                                                        <h6 class="mb-0 text-sm font-weight-bold">{{ kelompok.jadwal_kkn?.nama_periode }}</h6>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{ kelompok.dosen_dpl.nama_dosen }}</p>
+                                                <p class="text-sm font-weight-bold mb-0">{{ kelompok.dosen_dpl?.nama_dosen }}</p>
                                             </td>
                                             <td>
-                                                <span class="badge bg-gradient-success py-1 px-3">{{ kelompok.lokasi_kkn.nama_desa }}</span>
+                                                <span class="badge bg-gradient-success py-1 px-3">{{ kelompok.lokasi_kkn?.nama_desa }}</span>
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0">{{ kelompok.nama_kelompok }}</p>
