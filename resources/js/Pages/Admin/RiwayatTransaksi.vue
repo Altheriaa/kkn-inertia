@@ -260,27 +260,25 @@ const formatTanggal = (date) => {
                                             </td>
                                             <!-- Aksi -->
                                             <td class="align-middle">
-                                                <button v-if="payment.status === 'pending' && payment.snap_token" type="button"
-                                                    class="btn btn-link text-success mb-0 py-1 badge bg-gradient-danger text-white"
-                                                    title="Bayar"
-                                                    @click="openSnap(payment.snap_token)">
-                                                    <i class="material-symbols-rounded text-lg">wallet</i>
-                                                    Bayar Sekarang
+                                                <button disabled v-if="payment.status === 'pending' && payment.snap_token" type="button"
+                                                    class="badge bg-gradient-danger border-0 py-1 pt-1 px-2 text-white">
+                                                    <i class="material-symbols-rounded text-xs me-1 align-middle">wallet</i>
+                                                    PENDING
                                                 </button>
                                                 <template v-if="payment.status === 'success'">
                                                     <a :href="`/admin/riwayat-transaksi/invoice/${payment.order_id}`" 
                                                         target="_blank" 
-                                                        class="btn btn-link text-success mb-0 py-1 badge bg-gradient-warning text-white"
+                                                        class="badge bg-gradient-warning py-1 pt-1 px-2 text-white me-1"
                                                         title="Cetak Invoice">
-                                                        <i class="material-symbols-rounded text-lg">receipt</i>
-                                                        Invoice
+                                                        <i class="material-symbols-rounded text-xs me-1 align-middle">receipt</i>
+                                                        INVOICE
                                                     </a>
                                                     <a :href="`/admin/riwayat-transaksi/formulir/${payment.order_id}`" 
                                                         target="_blank"
-                                                        class="btn btn-link text-success mb-0 py-1 ms-1 badge bg-gradient-success text-white"
+                                                        class="badge bg-gradient-success py-1 pt-1 px-2 text-white"
                                                         title="Cetak Formulir">
-                                                        <i class="material-symbols-rounded text-lg">description</i>
-                                                        Formulir
+                                                        <i class="material-symbols-rounded text-xs me-1 align-middle">description</i>
+                                                        FORMULIR
                                                     </a>
                                                 </template>
                                                 <span v-else>-</span>

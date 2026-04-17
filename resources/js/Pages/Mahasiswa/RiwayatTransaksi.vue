@@ -125,15 +125,6 @@ const formatTanggal = (date) => {
                         <!-- Action Bar -->
                         <div class="card-body pb-0 pt-3 px-4">
                             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
-                                <!-- Search Bar -->
-                                <!-- <div class="input-group input-group-outline" :class="{ 'is-focused': false, 'is-filled': searchQuery }" style="max-width: 300px;">
-                                    <label class="form-label">
-                                        Cari Transaksi...
-                                    </label>
-                                    <input type="text" class="form-control" v-model="searchQuery"
-                                        @focus="$event.target.parentElement.classList.add('is-focused')"
-                                        @blur="$event.target.parentElement.classList.remove('is-focused')">
-                                </div> -->
                             </div>
                         </div>
 
@@ -211,26 +202,26 @@ const formatTanggal = (date) => {
                                             <!-- Aksi -->
                                             <td class="align-middle">
                                                 <button v-if="payment.status === 'pending' && payment.snap_token" type="button"
-                                                    class="btn btn-link text-success mb-0 py-1 badge bg-gradient-danger text-white"
+                                                    class="badge bg-gradient-danger border-0 py-1 pt-1 px-2 text-white"
                                                     title="Bayar"
                                                     @click="openSnap(payment.snap_token)">
-                                                    <i class="material-symbols-rounded text-lg">wallet</i>
-                                                    Bayar Sekarang
+                                                    <i class="material-symbols-rounded text-xs me-1 align-middle">wallet</i>
+                                                    BAYAR SEKARANG
                                                 </button>
                                                 <template v-if="payment.status === 'success'">
                                                     <a :href="`/mahasiswa/riwayat-transaksi/invoice/${payment.order_id}`" 
                                                         target="_blank" 
-                                                        class="btn btn-link text-success mb-0 py-1 badge bg-gradient-warning text-white"
+                                                        class="badge bg-gradient-warning py-1 pt-1 px-2 text-white me-1"
                                                         title="Cetak Invoice">
-                                                        <i class="material-symbols-rounded text-lg">receipt</i>
-                                                        Invoice
+                                                        <i class="material-symbols-rounded text-xs me-1 align-middle">receipt</i>
+                                                        INVOICE
                                                     </a>
                                                     <a :href="`/mahasiswa/riwayat-transaksi/formulir/${payment.order_id}`" 
                                                         target="_blank"
-                                                        class="btn btn-link text-success mb-0 py-1 ms-1 badge bg-gradient-success text-white"
+                                                        class="badge bg-gradient-success py-1 pt-1 px-2 text-white"
                                                         title="Cetak Formulir">
-                                                        <i class="material-symbols-rounded text-lg">description</i>
-                                                        Formulir
+                                                        <i class="material-symbols-rounded text-xs me-1 align-middle">description</i>
+                                                        FORMULIR
                                                     </a>
                                                 </template>
                                                 <span v-else>-</span>

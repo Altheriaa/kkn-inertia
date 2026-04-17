@@ -184,7 +184,7 @@
             </tr>
             <tr>
                 <td class="label">Program Studi</td>
-                <td>: {{ $mahasiswa->prodi ?? }}</td>
+                <td>: {{ $mahasiswa->prodi }}</td>
             </tr>
             <tr>
                 <td class="label">Nomor HP / WhatsApp</td>

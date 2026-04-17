@@ -30,7 +30,7 @@ class PembayaranAdminController extends Controller
                 $query->where('status', $status);
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         return Inertia::render("Admin/RiwayatTransaksi", [
