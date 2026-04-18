@@ -343,8 +343,7 @@
                     </div>
 
                     <!-- {{-- button sync maahasiswa --}} -->
-                    <div class="card mt-2">
-                        <!-- {{-- Jadwal KKN --}} -->
+                    <!-- <div class="card mt-2">
                         <div class="card-header pb-0">
                             <div class="row p-4">
                                 <div class="d-flex justify-content-center">
@@ -357,8 +356,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- {{-- Table Biaya KKN --}} -->
-                    </div>
+                    </div> -->
                     <!-- {{-- end sync --}} -->
 
                 </div>
