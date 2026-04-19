@@ -41,6 +41,18 @@ const showFlashMessage = () => {
             },
             timer: 2000
         });
+    } else if (flash.error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: flash.error,
+            showConfirmButton: true,
+            customClass: {
+                popup: 'glass-popup rounded-3xl shadow-blur p-6',
+                title: 'font-bold',
+                confirmButton: 'button-confirm px-6 py-2 rounded-xl text-white'
+            }
+        });
     }
 
     if (Object.keys(errors).length > 0) {

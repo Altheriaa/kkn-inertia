@@ -38,11 +38,12 @@ class JadwalKknController extends Controller
                 'Accept' => 'application/json'
             ])->timeout(10)->get($siakadApiUrl);
 
+            $response->throw();
+
             if ($response->successful()) {
                 $dataApi = $response->json()['data'];
 
                 foreach ($dataApi as $item) {
-                    // Ambil nested object tahun_akademik
                     $ta = $item['tahun_akademik'] ?? [];
 
                     JadwalKkn::updateOrCreate(
@@ -68,7 +69,7 @@ class JadwalKknController extends Controller
                 return back()->with('success', 'Data Semester berhasil diperbarui!');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal sinkronisasi jadwal KKN');
+            return redirect()->back()->with('error', 'Gagal terhubung ke Siakad');
         }
 
     }
