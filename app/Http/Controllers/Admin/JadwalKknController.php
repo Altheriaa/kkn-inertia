@@ -54,6 +54,7 @@ class JadwalKknController extends Controller
                             // Format Nama: "2025 1 - Ganjil"
                             'nama_periode' => ($ta['tahun'] ?? '') . ' - ' . ucfirst($ta['semester'] ?? ''),
 
+                            
                             'semester'     => $ta['semester'] ?? null,
                             'tahun_ajaran' => $ta['tahun'] ?? null,
 
