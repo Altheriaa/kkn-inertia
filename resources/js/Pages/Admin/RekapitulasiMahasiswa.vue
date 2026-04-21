@@ -105,9 +105,14 @@ const paginationPages = computed(() => {
                         <div class="card-body pb-0 pt-3 px-4 mb-2">
                             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                                 
-                                <a :href="`/admin/rekapitulasi-mahasiswa-cetak?statusJadwal=${statusJadwal}&statusJenisKkn=${statusJenisKkn}`" target="_blank" class="btn bg-gradient-dark mb-0 shadow-sm">
-                                    <i class="material-symbols-rounded text-sm me-1">print</i> Cetak Laporan
-                                </a>
+                                <div class="d-flex gap-2">
+                                    <a :href="`/admin/rekapitulasi-mahasiswa-cetak?statusJadwal=${statusJadwal}&statusJenisKkn=${statusJenisKkn}`" target="_blank" class="btn bg-gradient-dark mb-0 shadow-sm">
+                                        <i class="material-symbols-rounded text-sm me-1">print</i> Cetak Laporan
+                                    </a>
+                                    <a :href="`/admin/rekapitulasi-mahasiswa-export?statusJadwal=${statusJadwal}&statusJenisKkn=${statusJenisKkn}`" class="btn btn-excel mb-0 shadow-sm">
+                                        <i class="material-symbols-rounded text-sm me-1">table_view</i> Export Excel
+                                    </a>
+                                </div>
 
                                 <div class="d-flex flex-column flex-sm-row gap-2 w-100 w-md-auto">
                                     <!-- Filter Jenis KKN -->
@@ -320,6 +325,27 @@ const paginationPages = computed(() => {
 .btn-link:hover {
     transform: scale(1.15);
     transition: transform 0.2s ease;
+}
+
+.btn-excel {
+    background: linear-gradient(195deg, #43a047, #1b5e20);
+    color: #fff !important;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02rem;
+    text-transform: uppercase;
+    border: none;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.btn-excel:hover {
+    box-shadow: 0 4px 12px rgba(27, 94, 32, 0.45);
+    transform: translateY(-1px);
+    color: #fff !important;
+}
+
+.btn-excel i {
+    vertical-align: middle;
 }
 
 .pagination .page-item .page-link {

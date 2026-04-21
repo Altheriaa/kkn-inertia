@@ -83,6 +83,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     // Rekapitulasi Mahasiswa
     Route::get('/rekapitulasi-mahasiswa', [RekapitulasiMahasiswaController::class, 'index']);
     Route::get('/rekapitulasi-mahasiswa-cetak', [RekapitulasiMahasiswaController::class, 'cetakRekapitulasi']);
+    Route::get('/rekapitulasi-mahasiswa-export', [RekapitulasiMahasiswaController::class, 'exportExcel']);
 });
 
 // Mahasiswa Routing

@@ -9,6 +9,8 @@ use App\Models\PendaftaranKkn;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RekapitulasiMahasiswaExport;
 
 class RekapitulasiMahasiswaController extends Controller
 {
@@ -168,5 +170,45 @@ class RekapitulasiMahasiswaController extends Controller
         $pdf->setPaper('A4', 'landscape');
 
         return $pdf->stream('Laporan-Jumlah-Peserta-KKN.pdf');
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $listJadwal = JadwalKkn::orderBy('id_siakad', 'desc')->get();
+
+        $statusJadwal   = $request->input('statusJadwal');
+        $statusJenisKkn = $request->input('statusJenisKkn');
+
+        if (!$statusJadwal && !$statusJenisKkn && $listJadwal->isNotEmpty()) {
+            $statusJadwal = (string) $listJadwal->first()->id;
+        }
+
+        $siakadApiUrl     = 'https://mini-siakad.cloud/api/kkn/jenis';
+        $secretKeySiakad  = env('SYSTEM_API_KEY');
+        $listKkn          = collect([]);
+
+        try {
+            $response = Http::withHeaders([
+                'X-SYSTEM-KEY' => $secretKeySiakad,
+                'Accept'       => 'application/json'
+            ])->get($siakadApiUrl);
+
+            if ($response->successful()) {
+                $listKkn = collect($response->json()['data'] ?? []);
+            }
+        } catch (\Exception $e) {
+        }
+
+        $namaPeriode      = $listJadwal->where('id', $statusJadwal)->first()?->nama_periode ?? '-';
+        $selectedJenisKkn = $listKkn->firstWhere('id', $statusJenisKkn)['nama_jenis'] ?? 'Semua Jenis KKN';
+
+        $filenameSafe = preg_replace('/[\\/\\\\]/', '-', $namaPeriode); // ganti / dan \ dengan -
+        $filenameSafe = str_replace(' ', '-', $filenameSafe);
+        $filename = 'Rekap-Peserta-KKN-' . $filenameSafe . '.xlsx';
+
+        return Excel::download(
+            new RekapitulasiMahasiswaExport($statusJadwal, $statusJenisKkn, $namaPeriode, $selectedJenisKkn),
+            $filename
+        );
     }
 }
