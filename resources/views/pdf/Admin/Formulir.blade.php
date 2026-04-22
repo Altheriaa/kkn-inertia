@@ -171,12 +171,12 @@
         <div class="section-title">A. DATA MAHASISWA</div>
         <table class="info-table">
             <tr>
-                <td class="label">Nama Lengkap</td>
-                <td>: {{ $mahasiswa->nama }}</td>
-            </tr>
-            <tr>
                 <td class="label">NIM</td>
                 <td>: {{ $mahasiswa->nim }}</td>
+            </tr>
+            <tr>
+                <td class="label">Nama Lengkap</td>
+                <td>: {{ $mahasiswa->nama }}</td>
             </tr>
             <tr>
                 <td class="label">Fakultas</td>
