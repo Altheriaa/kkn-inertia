@@ -174,7 +174,7 @@
                 <td class="label">NIM</td>
                 <td>: {{ $mahasiswa->nim }}</td>
             </tr>
-            <tr>
+            <tr>    
                 <td class="label">Nama Lengkap</td>
                 <td>: {{ $mahasiswa->nama }}</td>
             </tr>

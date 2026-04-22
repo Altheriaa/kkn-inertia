@@ -12,6 +12,8 @@
         jadwal_kkn_dash: Object,
         jenisKknList: Object,
         mahasiswaCount: Object,
+        mahasiswaMale: Object,
+        mahasiswaFemale: Object,
         totalAktif: Object,
         transaksiCount: Object,
         pendaftarPeriode: Object,
@@ -111,12 +113,12 @@
                 <div>
                     <h3 class="mb-3 h4 font-weight-bolder">Dashboard Admin</h3>
                 </div>
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
                     <div class="card">
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <span class="text-sm mb-0 text-capitalize">Semester</span>
+                                    <span class="text-sm mb-0 text-capitalize">Periode KKN / Semester</span>
                                     <br>
                                     <span class="font-weight-bold text-black text-lg mb-0">{{ jadwal_kkn_dash?.nama_periode || '-' }}</span>
                                 </div>
@@ -132,6 +134,32 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-header p-2 ps-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="text-sm mb-0 text-capitalize">Jumlah Transaksi</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ transaksiCount }}</span>
+                                </div>
+                                <div
+                                    class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                    <i class="material-symbols-rounded opacity-10">payment</i>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="dark horizontal my-0">
+                        <div class="card-footer p-2 ps-3">
+                            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <h3 class="mb-3 h4 font-weight-bolder"></h3>
+                </div>
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div class="card">
                         <div class="card-header p-2 ps-3">
@@ -143,7 +171,7 @@
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                                    <i class="material-symbols-rounded opacity-10">badge</i>
+                                    <i class="material-symbols-rounded opacity-10">supervised_user_circle</i>
                                 </div>
                             </div>
                         </div>
@@ -158,13 +186,34 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <span class="text-sm mb-0 text-capitalize">KKN Aktif</span>
+                                    <span class="text-sm mb-0 text-capitalize">Jumlah Laki Laki</span>
                                     <br>
-                                    <span class="font-weight-bold text-black text-lg mb-0">{{ totalAktif }}</span>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ mahasiswaMale }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                                    <i class="material-symbols-rounded opacity-10">school</i>
+                                    <i class="material-symbols-rounded opacity-10">man</i>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="dark horizontal my-0">
+                        <div class="card-footer p-2 ps-3">
+                            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-header p-2 ps-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="text-sm mb-0 text-capitalize">Jumlah Perempuan</span>
+                                    <br>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ mahasiswaFemale }}</span>
+                                </div>
+                                <div
+                                    class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                                    <i class="material-symbols-rounded opacity-10">woman</i>
                                 </div>
                             </div>
                         </div>
@@ -179,13 +228,13 @@
                         <div class="card-header p-2 ps-3">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <span class="text-sm mb-0 text-capitalize">Jumlah Transaksi</span>
+                                    <span class="text-sm mb-0 text-capitalize">KKN Aktif</span>
                                     <br>
-                                    <span class="font-weight-bold text-black text-lg mb-0">{{ transaksiCount }}</span>
+                                    <span class="font-weight-bold text-black text-lg mb-0">{{ totalAktif }}</span>
                                 </div>
                                 <div
                                     class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                                    <i class="material-symbols-rounded opacity-10">weekend</i>
+                                    <i class="material-symbols-rounded opacity-10">school</i>
                                 </div>
                             </div>
                         </div>

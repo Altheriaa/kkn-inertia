@@ -18,6 +18,8 @@ class DashboardController extends Controller
     {
         // count mahasiswa
         $mahasiswaCount = Mahasiswa::count();
+        $mahasiswaMale = Mahasiswa::where('jenis_kelamin', 'L')->count();
+        $mahasiswaFemale = Mahasiswa::where('jenis_kelamin', 'P')->count();
         $transaksiCount = Payment::count();
         $pendaftarPeriode = PendaftaranKkn::where('status_pendaftaran', 'valid')->count();
 
@@ -51,6 +53,8 @@ class DashboardController extends Controller
             'jadwal_kkn_dash' => $jadwal_kkn_dash,
             'jenisKknList' => $jenisKknList,
             'mahasiswaCount' => $mahasiswaCount,
+            'mahasiswaMale' => $mahasiswaMale,
+            'mahasiswaFemale' => $mahasiswaFemale,
             'totalAktif' => $totalAktif,
             'transaksiCount' => $transaksiCount,
             'pendaftarPeriode' => $pendaftarPeriode,
