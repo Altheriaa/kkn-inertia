@@ -57,6 +57,7 @@ class LoginController extends Controller
                 'jumlah_sks' => $userDataFromApi['jumlah_sks'],
                 'fakultas' => $userDataFromApi['fakultas']['nama_fakultas'] ?? null,
                 'prodi' => $userDataFromApi['prodi']['nama_prodi'] ?? null,
+                'jenis_kelamin' => $userDataFromApi['mahasiswa']['jenis_kelamin'] ?? null,
             ]
         );
 
