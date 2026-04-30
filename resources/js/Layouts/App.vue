@@ -5,6 +5,7 @@
     import Footer from './Footer.vue';
     import Navbar from './Navbar.vue';
 
+
     onMounted(() => {
         const handleClickOutside = (e) => {
             const body = document.getElementsByTagName('body')[0];

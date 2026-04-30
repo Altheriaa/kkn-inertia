@@ -154,7 +154,7 @@ const isOpen = computed(() => {
               </div>
               <h5 class="mb-2">Cek Persyaratan</h5>
               <p class="text-secondary mb-0">
-                Pastikan Anda telah memenuhi minimal 100 SKS dan tidak memiliki tunggakan pembayaran.
+                Pastikan Anda telah memenuhi minimal 100 SKS.
               </p>
             </div>
           </div>
