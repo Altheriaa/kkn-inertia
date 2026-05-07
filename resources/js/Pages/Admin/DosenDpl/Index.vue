@@ -141,7 +141,6 @@ watch(() => page.props.flash, () => {
 }, { deep: true });
 
 </script>
-
 <template>
     <Layout>
         <div class="container-fluid py-2 mb-5">

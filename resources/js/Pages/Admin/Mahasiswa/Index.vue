@@ -165,13 +165,13 @@ watch(() => page.props.flash, () => {
                                         :class="statusFilter === 'Sudah Daftar' ? 'bg-gradient-success text-white' : 'btn-outline-success'"
                                         @click="setFilter('Sudah Daftar')">
                                         <i class="material-symbols-rounded text-xs me-1 align-middle">check_circle</i>
-                                        Sudah Daftar
+                                        Sudah Bayar
                                     </button>
                                     <button class="btn btn-sm mb-0 py-1 px-3"
                                         :class="statusFilter === 'Belum Daftar' ? 'bg-gradient-secondary text-white' : 'btn-outline-secondary'"
                                         @click="setFilter('Belum Daftar')">
                                         <i class="material-symbols-rounded text-xs me-1 align-middle">pending</i>
-                                        Belum Daftar
+                                        Belum Bayar
                                     </button>
                                 </div>
                                 <!-- Search Bar -->
@@ -257,8 +257,8 @@ watch(() => page.props.flash, () => {
                                                 <p class="text-sm font-weight-bold mb-0">{{ mhs.email }}</p>
                                             </td>
                                             <td>
-                                                <span v-if="mhs.status_kkn === 'Sudah Daftar'" class="badge bg-gradient-success py-1 px-3">{{ mhs.status_kkn }}</span>
-                                                <span v-else class="badge bg-gradient-secondary py-1 px-3">{{ mhs.status_kkn }}</span>
+                                                <span v-if="mhs.status_kkn === 'Sudah Daftar'" class="badge bg-gradient-success py-1 px-3">Sudah Bayar</span>
+                                                <span v-else class="badge bg-gradient-secondary py-1 px-3">Belum Bayar</span>
                                             </td>
                                             <!-- Aksi -->
                                             <td class="align-middle text-center">
